@@ -1,0 +1,22 @@
+
+label{
+    color: white;
+}
+
+button{
+    margin: 2%;
+  }
+
+h3{
+    color: white;
+}
+
+input{
+    display: block;
+    margin: 2%;
+}
+
+.results {
+    background-color: grey;
+    border: 3px solid black;
+}
