@@ -38,15 +38,15 @@ export class CoursesService {
     return this.http.post('/api/catalog',{schdName});
   }
 
-  saveCoursesToSchd(){
-
+  saveCoursesToSchd(Schd){
+    return this.http.post('/api/catalog',{Schd});
   }
 
-  deleteSchd(){
-
+  deleteSchd(schdName){
+    return this.http.get(`/api/catalog/schedules/delete/${schdName}`);
   }
 
   deleteAllSchds(){
-
+    return this.http.get('/api/catalog/del/all');
   }
 }

@@ -9,3 +9,7 @@ button{
 h3{
     color: white;
 }
+
+div{
+    display: inline;
+}

@@ -15,22 +15,26 @@ export class SearchBarComponent implements OnInit {
   comp: string = '';
 
   constructor(private CoursesService: CoursesService) {
-   }
+  }
 
   ngOnInit(): void {
   }
 
+//call service function to retrieve information for all courses
  viewAll(){
     this.CoursesService.getSubjects().subscribe(courses =>{ this.courses = courses;
     });
   }
 
+  //send parameters to service in order to retrieve courses based on user input
   search(){
-    this.CoursesService.getSearchResults(this.sub,this.code,this.comp).subscribe(courses =>{ this.courses = courses;
-    });
+    if(this.inputValidation(this.sub) == true && this.inputValidation(this.code) == true && this.inputValidation(this.comp) == true){
+      this.CoursesService.getSearchResults(this.sub,this.code,this.comp).subscribe(courses =>{ this.courses = courses;
+      });
+    }
   }
 
-  //input sanittization, ensures that input does not contain any html,css, javascript characters
+//input sanittization, ensures that input does not contain any html,css, javascript characters
  inputValidation(name){
   if(name.length > 20 || name.length < 0 || name.includes('#') || name.includes('/') || name.includes(':') || name.includes('.') 
   || name.includes(',') || name.includes('?') || name.includes('<') || name.includes('>') || name.includes('%') || 

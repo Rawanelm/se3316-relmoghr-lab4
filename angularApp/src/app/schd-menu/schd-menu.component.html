@@ -6,10 +6,13 @@
     <br>
     
     <label>Add courses to a schedule:</label>
-    <div *ngFor="let value of values; let i = index"> 
-        <input type="text" [(ngModel)]="subject.value" #name="ngModel" name="subject{{i}}" placeholder ="Subject Code">
-        <input type="text" [(ngModel)]="code.value" #name="ngModel" name="code{{i}}" placeholder ="Course Code">
+    <input type ="text" [(ngModel)]= "modSchdName" placeholder="Schedule to be filled">
+    <br>
+    <div *ngFor="let course of courses; let i = index"> 
+        <input type="text" [(ngModel)]="course.subject" #name="ngModel" name="course{{i}}" placeholder ="Subject Code">
+        <input type="text" [(ngModel)]="course.courseCode" #name="ngModel" name="course{{i}}" placeholder ="Course Code">
     </div>
+    
     <button (click)= "add()">Add more courses</button>
     <br>
     <button (click) = "saveNewCourses()">Save Courses to Schedule</button>
@@ -27,3 +30,9 @@
     <button (click) = "delAll()">Delete All Schedules</button>
     <br>
 
+    <div id="results">
+    <tr *ngFor =  'let schd of schedules'>
+        <ol>Schedule Name: {{schd.name}}</ol>
+        <ol>Number of Courses: {{schd.num}}</ol>
+    </tr>
+</div>
