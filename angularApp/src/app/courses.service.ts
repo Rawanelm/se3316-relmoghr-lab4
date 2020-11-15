@@ -47,6 +47,6 @@ export class CoursesService {
   }
 
   deleteAllSchds(){
-    return this.http.get('/api/catalog/del/all');
+    return this.http.get('/api/catalog/schedules/del/all');
   }
 }

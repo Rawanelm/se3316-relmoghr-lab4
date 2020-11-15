@@ -12,12 +12,13 @@ import {CoursesService} from '../courses.service';
 export class SchdMenuComponent implements OnInit {
 
   schedules: any = [];
-  scheduleName: string = '';
+  name: string = '';
   deleteSchd: string = '';
   viewSchd: string = '';
   modSchdName: string ='';
   courses = [];
   counter: number = 0;
+  savedCourses = [];
  
   constructor(private coursesService: CoursesService) { }
 
@@ -25,27 +26,30 @@ export class SchdMenuComponent implements OnInit {
   }
 
   add(){
-    this.courses.push({subject: "", courseCode :""});
-    if (this.inputValidation(this.courses[this.counter].subject) == true && this.inputValidation(this.courses[this.counter].subject)== true){
-      this.courses[this.counter] // delete an array item??
+    this.courses.push({subject: "", courseCode : ""});
+    if (this.inputValidation(this.courses[this.counter].subject) == false && this.inputValidation(this.courses[this.counter].subject)== false){
+      this.courses.splice((this.counter),1); // delete an array item if the characters are not valid
+    }
+    if(this.courses[this.counter].subject == "" ||this.courses[this.counter].courseCode == ""  ){
+      this.courses.splice((this.counter),1); //remove courses with missing information
     }
     console.log(this.courses);
   }
 
   saveSchedule(){
-    let newSchd = {
+    let newSched = {
       name: "",
-      num : "0"
+      num: 0
     }
 
-    //Ask Sanah about this 
-    if(this.inputValidation(this.scheduleName) == true){
-      newSchd.name = this.scheduleName;
+    if(this.inputValidation(this.name) == true){
+      //this.coursesService.saveSchdName(this.name).subscribe(list => {this.schedules = list});
+      newSched.name = this.name;
     }
-  
-    this.coursesService.saveSchdName(newSchd);
+
+    this.coursesService.saveSchdName(newSched).subscribe(list => {this.schedules = list});
   }
-
+  
   //sends schedule name to be deleted to service 
   delSchd(){
     if(this.inputValidation(this.deleteSchd) == true){
@@ -58,6 +62,7 @@ export class SchdMenuComponent implements OnInit {
     let number = 0;
     let newSchd = {
       name: "",
+      num: 0
     }
 
     if(this.inputValidation(this.modSchdName) == true){
@@ -71,14 +76,15 @@ export class SchdMenuComponent implements OnInit {
       }
     }
 
-    newSchd["num"] = number.toString();
+    newSchd["num"] = number;
     console.log(newSchd);
 
     this.coursesService.saveCoursesToSchd(newSchd);
+    this.counter = 0;
   }
 
   delAll(){
-    this.coursesService.deleteAllSchds();
+    this.coursesService.deleteAllSchds().subscribe(list => {this.schedules = list});
     //alert("All Schedules Deleted")
   }
 
@@ -88,11 +94,16 @@ export class SchdMenuComponent implements OnInit {
   }
 
   viewSchedule(){
-    if(this.inputValidation(this.viewSchd) == true){
+    /*if(this.inputValidation(this.viewSchd) == true){
       this.coursesService.viewSchd(this.viewSchd).subscribe(schds => {
         this.schedules = schds;
       });
-    }
+      for(let i = 0; i <this.schedules.length; i++){
+        for(let j = 0; j< this.schedules[i].num; j++){
+          this.savedCourses[j].push(this.schedules[j][("course_"+(j+1).toString())])
+        }
+      }
+    }*/
   }
   
 //input sanittization, ensures that input does not contain any html,css, javascript characters

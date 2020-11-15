@@ -1,7 +1,7 @@
 <h3>Schedule Menu</h3>
 
     <label> Create a schedule:</label> 
-    <input type="text" [(ngModel)]="scheduleName" placeholder ="Schedule Name"/>
+    <input type="text" [(ngModel)]="name" placeholder ="Schedule Name"/>
     <button (click)= "saveSchedule()" >Save Schedule</button>
     <br>
     
@@ -9,7 +9,9 @@
     <input type ="text" [(ngModel)]= "modSchdName" placeholder="Schedule to be filled">
     <br>
     <div *ngFor="let course of courses; let i = index"> 
+        <label>Subject Code:</label>
         <input type="text" [(ngModel)]="course.subject" #name="ngModel" name="course{{i}}" placeholder ="Subject Code">
+        <label>Course Code:</label>
         <input type="text" [(ngModel)]="course.courseCode" #name="ngModel" name="course{{i}}" placeholder ="Course Code">
     </div>
     
@@ -33,6 +35,9 @@
     <div id="results">
     <tr *ngFor =  'let schd of schedules'>
         <ol>Schedule Name: {{schd.name}}</ol>
-        <ol>Number of Courses: {{schd.num}}</ol>
+        <div *ngFor = "let saved of savedCourses; let i = index">
+            <ol>Subject: {{saved.subject}} </ol>
+            <ol>Course Code: {{saved.courseCode}}</ol>
+        </div>  
     </tr>
 </div>
