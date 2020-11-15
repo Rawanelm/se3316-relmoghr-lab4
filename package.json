@@ -1,0 +1,27 @@
+{
+  "name": "se3316-relmoghr-lab4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lowdb": "^1.0.0",
+    "node": "^15.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rawanelm/se3316-relmoghr-lab4.git"
+  },
+  "author": "Rawan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rawanelm/se3316-relmoghr-lab4/issues"
+  },
+  "homepage": "https://github.com/Rawanelm/se3316-relmoghr-lab4#readme"
+}
