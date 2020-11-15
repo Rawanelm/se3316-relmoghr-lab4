@@ -15,18 +15,15 @@ export class SchdMenuComponent implements OnInit {
   deleteSchd: string = '';
   viewSchd: string = '';
   modSchdName: string ='';
-  counter: number = 1;
-
-  public items:any[];
+  values = [];
   
-
   constructor(private coursesService: CoursesService) { }
 
   ngOnInit(): void {
   }
 
   add(){
-    
+    this.values.push({value: ""});
   }
 
   saveSchedule(){
@@ -51,6 +48,24 @@ export class SchdMenuComponent implements OnInit {
   }
 
   viewSchedule(){
-
+    this.coursesService.viewSchd(this.viewSchd).subscribe(schds => {
+      this.schedules = schds;
+    });
   }
+
+  //input sanittization, ensures that input does not contain any html,css, javascript characters
+inputValidation(name){
+  if(name.length > 20 || name.length < 0 || name.includes('#') || name.includes('/') || name.includes(':') || name.includes('.') 
+  || name.includes(',') || name.includes('?') || name.includes('<') || name.includes('>') || name.includes('%') || 
+  name.includes('-') || name.includes('[') || name.includes(']') || name.includes('(') || name.includes('!') || 
+  name.includes(')') || name.includes("'") || name.includes('@') || name.includes(',') || name.includes('$') || 
+  name.includes('{') || name.includes('}') || name.includes('^') || name.includes('&') || name.includes('*') || 
+  name.includes('=') || name.includes('+'))
+  {
+      alert("Please input only valid characters, up to 20 maximum! Numbers and letters only.")
+      return false;
+  }
+  else
+      return true;
+}
 }

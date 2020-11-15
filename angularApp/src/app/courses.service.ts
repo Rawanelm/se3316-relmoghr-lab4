@@ -30,8 +30,8 @@ export class CoursesService {
     return this.http.get('/api/catalog/schedules/all');
   }
 
-  viewSchd(){
-
+  viewSchd(schdName){
+    return this.http.get(`/api/catalog/schedules/print/${schdName}`);
   }
 
   saveSchdName(schdName){

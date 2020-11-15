@@ -29,4 +29,20 @@ export class SearchBarComponent implements OnInit {
     this.CoursesService.getSearchResults(this.sub,this.code,this.comp).subscribe(courses =>{ this.courses = courses;
     });
   }
+
+  //input sanittization, ensures that input does not contain any html,css, javascript characters
+ inputValidation(name){
+  if(name.length > 20 || name.length < 0 || name.includes('#') || name.includes('/') || name.includes(':') || name.includes('.') 
+  || name.includes(',') || name.includes('?') || name.includes('<') || name.includes('>') || name.includes('%') || 
+  name.includes('-') || name.includes('[') || name.includes(']') || name.includes('(') || name.includes('!') || 
+  name.includes(')') || name.includes("'") || name.includes('@') || name.includes(',') || name.includes('$') || 
+  name.includes('{') || name.includes('}') || name.includes('^') || name.includes('&') || name.includes('*') || 
+  name.includes('=') || name.includes('+'))
+  {
+      alert("Please input only valid characters, up to 20 maximum! Numbers and letters only.")
+      return false;
+  }
+  else
+      return true;
+}
 }
