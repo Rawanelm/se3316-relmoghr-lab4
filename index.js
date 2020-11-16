@@ -53,11 +53,11 @@ router.get('/schedules/all', (req, res) => {
 router.get('/schedules/check/:schd',(req, res) => {
     const sch = req.params.schd;
 
-    if(db.get('schedules').find({name:sch}).value() === undefined){
-       res.send("Proceed"); //sends proceed when the schedule name doesn't exist in database
+    if(db.get('schedules').find({Schd:{}}).find({name:sch}).value() === undefined){
+        res.send({status: 1});
     }
     else{
-        res.send("Stop"); //sends stop when the schedule name doesn't exist in database
+        res.send({status: 4});
     }
 });
 
@@ -103,7 +103,6 @@ router.post('/schedules/find/:schdName', (req,res) => {
 router.post('/', (req,res) => {
     const schedule = req.body;
     console.log(schedule);
-    db.get('schedules').remove({name: schedule.name }).write();
     db.get('schedules').push(schedule).write();
     res.send(schedule);
 

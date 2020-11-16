@@ -29,17 +29,18 @@ export class SchdMenuComponent implements OnInit {
   add(){
     this.courses.push({subject: "", courseCode : ""});
     console.log(this.courses);
-
-   if (this.inputValidation(this.courses[this.counter].subject) == false && this.inputValidation(this.courses[this.counter].subject)== false){
-      this.courses.splice((this.counter),1); // delete an array item if the characters are not valid
-    }
   }
 
-  //sends schedule name to be deleted to service 
-  delSchd(){
-    if(this.inputValidation(this.deleteSchd) == true){
-      this.coursesService.deleteSchd(this.deleteSchd);
-    }
+  checkScheduleName(){
+    this.coursesService.checkScheduleName(this.modSchdName).subscribe(schds => {this.schedules = schds;
+      
+      if(this.schedules.status == 4){
+        alert("Schedule name already exists")
+      }
+      else if(this.schedules.status == 1){
+        this.saveNewCourses();        
+      }
+    });
   }
 
   //saves schedule with subject and course code pairs
@@ -49,6 +50,11 @@ export class SchdMenuComponent implements OnInit {
       name: "",
       num: 0
     }
+
+    for(let k =0; k< this.courses.length; k++){
+    if (this.inputValidation(this.courses[k].subject) == false && this.inputValidation(this.courses[k].subject)== false){
+      this.courses.splice((k),1); // delete an array item if the characters are not valid
+    }}
 
     if(this.inputValidation(this.modSchdName) == true){
       newSchd.name = this.modSchdName;

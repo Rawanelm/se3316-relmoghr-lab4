@@ -1,23 +1,18 @@
 <h3>Schedule Menu</h3>
 
-    <!--<label> Create a schedule:</label> 
-    <input type="text" [(ngModel)]="name" placeholder ="Schedule Name"/>
-    <button (click)= "saveSchedule()" >Save Schedule</button>
-    <br>-->
-    
     <label>Add courses to a schedule:</label>
     <input type ="text" [(ngModel)]= "modSchdName" placeholder="Schedule to be filled">
     <br>
     <div id="userInput" *ngFor="let course of courses; let i = index"> 
         <label>Subject Code:</label>
-        <input type="text" [(ngModel)]="course.subject" #name="ngModel" name="course{{i}}" placeholder ="Subject Code">
+        <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="course.subject" #name="ngModel" name="course{{i}}" placeholder ="Subject Code">
         <label>Course Code:</label>
-        <input type="text" [(ngModel)]="course.courseCode" #name="ngModel" name="course{{i}}" placeholder ="Course Code">
+        <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="course.courseCode" #name="ngModel" name="course{{i}}" placeholder ="Course Code">
     </div>
     
     <button (click)= "add()">Add more courses</button>
     <br>
-    <button (click) = "saveNewCourses()">Save Courses to Schedule</button>
+    <button (click) = "checkScheduleName()">Save Courses to Schedule</button>
     <br> 
 
     <button (click) = "viewAll()">View All Schedules</button>

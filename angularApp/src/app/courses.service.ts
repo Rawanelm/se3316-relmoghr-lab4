@@ -30,22 +30,14 @@ export class CoursesService {
     return this.http.get('/api/catalog/schedules/all');
   }
 
-  viewSchd(schdName){
-    return this.http.get(`/api/catalog/schedules/print/${schdName}`);
-  }
-
-  saveSchdName(schdName){
-    return this.http.post('/api/catalog',{schdName});
-  }
-
   saveCoursesToSchd(Schd){
     return this.http.post('/api/catalog',{Schd});
   }
 
-  deleteSchd(schdName){
-    return this.http.get(`/api/catalog/schedules/delete/${schdName}`);
+  checkScheduleName(scheduleName){
+    return this.http.get('/api/catalog/schedules/check/'+ `${scheduleName}`);
   }
-
+  
   deleteAllSchds(){
     return this.http.get('/api/catalog/schedules/del/all');
   }

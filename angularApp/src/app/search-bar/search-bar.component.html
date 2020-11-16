@@ -1,8 +1,8 @@
 <h3>Search Courses</h3>
 
-    <input type="text" [(ngModel)]="sub" placeholder = "Subject Code"/>
-    <input type="text" [(ngModel)]="code" placeholder = "Course Code"/>
-    <input type="text" [(ngModel)]="comp" placeholder = "Course Component"/>
+    <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="sub" placeholder = "Subject Code"/>
+    <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="code" placeholder = "Course Code"/>
+    <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="comp" placeholder = "Course Component"/>
     <button (click)= "search()">Search</button>
     <button (click)= "viewAll()" >View All Courses</button>
 
@@ -15,6 +15,7 @@
         <ol>{{course.endTime}}</ol>
         <ol>{{course.days}}</ol>
     </tr>
+    <br>
 </div>
 
 <router-outlet></router-outlet>
