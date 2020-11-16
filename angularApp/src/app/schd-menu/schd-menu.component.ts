@@ -13,7 +13,6 @@ import * as angular from "angular";
 export class SchdMenuComponent implements OnInit {
 
   schedules: any = [];
-  //name: string = '';
   deleteSchd: string = '';
   viewSchd: string = '';
   modSchdName: string ='';
@@ -31,13 +30,9 @@ export class SchdMenuComponent implements OnInit {
     this.courses.push({subject: "", courseCode : ""});
     console.log(this.courses);
 
-   /* if (this.inputValidation(this.courses[this.counter].subject) == false && this.inputValidation(this.courses[this.counter].subject)== false){
+   if (this.inputValidation(this.courses[this.counter].subject) == false && this.inputValidation(this.courses[this.counter].subject)== false){
       this.courses.splice((this.counter),1); // delete an array item if the characters are not valid
     }
-    if(this.courses[this.counter].subject == "" ||this.courses[this.counter].courseCode == ""  ){
-      this.courses.splice((this.counter),1); //remove courses with missing information
-    }*/
-    console.log(this.courses);
   }
 
   //sends schedule name to be deleted to service 
@@ -82,7 +77,6 @@ export class SchdMenuComponent implements OnInit {
     this.coursesService.viewAllSchds().subscribe(schds => {
       this.schedules = schds});
     
-      
     for(let i = 0; i <this.schedules.length; i++){
         for(let j = 0; j< this.schedules[i].num; j++){
           this.objects[j].push(this.schedules[j].Schd[("course_"+(j+1).toString())])
@@ -91,8 +85,6 @@ export class SchdMenuComponent implements OnInit {
           console.log(this.savedCourses);
       }
     }
-
-    
   }
 
   
