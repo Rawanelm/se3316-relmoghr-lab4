@@ -1,27 +1,45 @@
 {
   "schedules": [
     {
-      "schdName": {
+      "Schd": {
         "name": "rawan",
-        "num": 0
+        "num": 2,
+        "course _1": {
+          "subject": "Software",
+          "courseCode": "1020"
+        },
+        "course _2": {
+          "subject": "Writing",
+          "courseCode": "2000"
+        }
       }
     },
     {
-      "schdName": "rawan"
+      "Schd": {
+        "name": "year",
+        "num": 2,
+        "course _1": {
+          "subject": "Software",
+          "courseCode": "1020"
+        },
+        "course _2": {
+          "subject": "Writing",
+          "courseCode": "1020"
+        }
+      }
     },
     {
-      "schdName": ""
-    },
-    {
-      "schdName": ""
-    },
-    {
-      "schdName": "rawan"
-    },
-    {
-      "schdName": {
+      "Schd": {
         "name": "rawan",
-        "num": 0
+        "num": 2,
+        "course _1": {
+          "subject": "Math",
+          "courseCode": "1020"
+        },
+        "course _2": {
+          "subject": "CEE",
+          "courseCode": "1020"
+        }
       }
     }
   ]

@@ -91,7 +91,9 @@ router.get('/schedules/find/:schd',(req, res) => {
 router.post('/schedules/find/:schdName', (req,res) => {
     const foundSchedule = req.body;
     console.log(foundSchedule);
-    db.get('schedules').remove({name: foundSchedule.name }).write();
+    foundSchedule.stringify();
+    console.log(foundSchedule);
+    db.get('schedules').remove({name: foundSchedule.schdName.name }).write();
     db.get('schedules').push(foundSchedule).write();
     res.send(foundSchedule);
 });
@@ -101,6 +103,7 @@ router.post('/schedules/find/:schdName', (req,res) => {
 router.post('/', (req,res) => {
     const schedule = req.body;
     console.log(schedule);
+    db.get('schedules').remove({name: schedule.name }).write();
     db.get('schedules').push(schedule).write();
     res.send(schedule);
 
@@ -108,6 +111,7 @@ router.post('/', (req,res) => {
 
 //enable us to read and parse JSON file
 const fs = require('fs');
+const { stringify } = require('querystring');
 const file = fs.readFileSync('./Lab3-timetable-data.json', 'utf8', function(err, data) {
 });
 const catalogue = JSON.parse(file);

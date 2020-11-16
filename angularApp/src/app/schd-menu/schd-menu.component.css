@@ -18,3 +18,8 @@ ol{
     font-family: Arial, Helvetica, sans-serif;
     color: white;
 }
+
+#userInput{
+    width:100%;
+    display: block;
+}

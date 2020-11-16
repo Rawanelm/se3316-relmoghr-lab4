@@ -16,7 +16,20 @@ input{
     margin: 2%;
 }
 
-.results {
+#results {
     background-color: grey;
     border: 3px solid black;
 }
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
