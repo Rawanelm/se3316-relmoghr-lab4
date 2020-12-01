@@ -74,10 +74,10 @@ export class SchdMenuComponent implements OnInit {
     this.counter = 0;
   }
 
-  delAll(){
+  /*delAll(){
     this.coursesService.deleteAllSchds().subscribe(list => {this.schedules = list});
     alert("All Schedules Deleted");
-  }
+  }*/
 
   viewAll(){
     this.coursesService.viewAllSchds().subscribe(schds => {

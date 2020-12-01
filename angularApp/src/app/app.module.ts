@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SchdMenuComponent } from './schd-menu/schd-menu.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 const Routes =[
   {
@@ -19,7 +20,8 @@ const Routes =[
   declarations: [
     AppComponent,
     SearchBarComponent,
-    SchdMenuComponent
+    SchdMenuComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,

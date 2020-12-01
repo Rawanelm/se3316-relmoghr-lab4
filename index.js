@@ -2,18 +2,21 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; 
 const router = express.Router();
-const path = require('path');
+const secure = express.Router();
+const admin = express.Router();
 const bodyParser = require('body-parser');
-let courseArray = [];
-let courseCodes= [];
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
  
 const adapter = new FileSync('schedule.json');
+const userAdapter= new FileSync('users.json');
 const db = low(adapter);
+const userDB = low(userAdapter);
 
-db.defaults({schedules: []})
+//what happens if i put [] instead of {schedules: []} ??
+db.defaults({schedules: []});
+userDB.defaults([]);
 
 app.use(express.static(process.cwd() +'/angularApp/dist/angularApp'));
 app.use(express.json());
@@ -30,12 +33,19 @@ app.use(bodyParser.urlencoded({
 const read = require('fs');
 const ScheduleFile = read.readFileSync('./schedule.json', 'utf8');
 
-//deletes all schedules
-router.get('/schedules/del/all', (req,res)=>{
-    if (db.has('schedules').value()){
-        db.get('schedules').remove({}).write() //remove found schedule from database
+
+
+//delete a specific schedule from database
+secure.get('/schedules/delete/:schd', (req,res)=>{
+    const schd = req.params.schd;
+
+    if(db.get('schedules').find({name:schd}).value() === undefined){
+        res.send("Schedule doesn't exist"); //sends alert when requestedschedule doesn't exist
     }
-    res.send("Schedules deleted.")//send alert to front end
+    else{
+        db.get('schedules').remove({name:schd}).write();
+        res.send("Schedule deleted"); //sends alert when schedule is deleted
+    }
 });
 
 //send course and subject codes list given the schedule name
@@ -50,7 +60,7 @@ router.get('/schedules/all', (req, res) => {
 });
 
 //check if the schedule exits or not 
-router.get('/schedules/check/:schd',(req, res) => {
+secure.get('/schedules/check/:schd',(req, res) => {
     const sch = req.params.schd;
 
     if(db.get('schedules').find({Schd:{}}).find({name:sch}).value() === undefined){
@@ -61,21 +71,9 @@ router.get('/schedules/check/:schd',(req, res) => {
     }
 });
 
-//delete a specific schedule from database
-router.get('/schedules/delete/:schd', (req,res)=>{
-    const schd = req.params.schd;
-
-    if(db.get('schedules').find({name:schd}).value() === undefined){
-        res.send("Schedule doesn't exist"); //sends alert when requestedschedule doesn't exist
-    }
-    else{
-        db.get('schedules').remove({name:schd}).write();
-        res.send("Schedule deleted"); //sends alert when schedule is deleted
-    }
-});
 
 //check if the schedule exits or not 
-router.get('/schedules/find/:schd',(req, res) => {
+secure.get('/schedules/find/:schd',(req, res) => {
     const sch = req.params.schd;
 
     if(db.get('schedules').find({name:sch}).value() === undefined){
@@ -88,7 +86,7 @@ router.get('/schedules/find/:schd',(req, res) => {
 });
 
 //save schedule with content added by user
-router.post('/schedules/find/:schdName', (req,res) => {
+secure.post('/schedules/find/:schdName', (req,res) => {
     const foundSchedule = req.body;
     console.log(foundSchedule);
     foundSchedule.stringify();
@@ -100,12 +98,11 @@ router.post('/schedules/find/:schdName', (req,res) => {
 
 
 //Save Schedule Name
-router.post('/', (req,res) => {
+secure.post('/', (req,res) => {
     const schedule = req.body;
     console.log(schedule);
     db.get('schedules').push(schedule).write();
     res.send(schedule);
-
 });
 
 //enable us to read and parse JSON file
@@ -121,100 +118,30 @@ app.use((req, res ,next) => {
     next();
 });
 
-//get all subject codes and course names and place them into an array
-router.get('/subject', (req, res) => {
 
- for(var i = 0; i < catalogue.length; i++){
-    let courseObjects = new Object();
-    for(var j = 0; j < catalogue.length; j++){
-        //set new object's properties
-        courseObjects.subject = catalogue[i].subject;
-        courseObjects.class = catalogue[i].className;
-        if(catalogue[i].course_info[0]){
-            courseObjects["component"] = catalogue[i].course_info[0]["ssr_component"];
-            courseObjects["startTime"] = catalogue[i].course_info[0]["start_time"];
-            courseObjects["endTime"] = catalogue[i].course_info[0]["end_time"];
-            courseObjects["days"] = catalogue[i].course_info[0]["days"];
-        }
-    }
-    courseArray.push(courseObjects); //add object to array
-    } 
-    console.log("Request Recieved"); 
-    res.send(courseArray); //send the array
-});
-
-// used to get course Codes for a specific subject code
-router.get('/subject/:code', (req,res) => {
-const sCode = req.params.code;
-const courses = catalogue.filter( c => c.subject == sCode);
-
-console.log(`GET request for ${req.url}`);
+router.get('/:code', (req,res) => {
+    const sCode = req.params.code;
+    const courses = catalogue.filter( c => c.subject == sCode);
     
-    if (courses.length > 0){
-        for(var i = 0; i < catalogue.length; i++){
-            let foundCourse = new Object();
-            if(catalogue[i].subject === sCode) {
-                foundCourse["subject"] = catalogue[i]["subject"];
+    console.log(`GET request for ${req.url}`);
+      
+        if (courses.length >0){
     
-                if(catalogue[i].catalog_nbr){
-                    foundCourse["class"] = catalogue[i]["catalog_nbr"];
-    
-                    if(catalogue[i].course_info[0].ssr_component){
-                        foundCourse["component"] = catalogue[i].course_info[0]["ssr_component"];
-                        foundCourse["startTime"] = catalogue[i].course_info[0]["start_time"];
-                        foundCourse["endTime"] = catalogue[i].course_info[0]["end_time"];
-                        foundCourse["days"] = catalogue[i].course_info[0]["days"];
-                    }
-                    courseCodes.push(foundCourse);
-                }
+            for(var i = 0; i<courses.length;i++){
+            courseCodes[i] = courses[i].catalog_nbr;
             }
+    
+        res.send(courseCodes);
         }
-    res.send(courseCodes);
-    }
-
-    if (courses.length == 0){
-        res.status(404).send(`Course ${subject} was not found`)
-    }
-});
-
-//used to get timetable for a specific course
-router.get('/subject/:sCode/:cCode/:comp', (req,res) => {
-    const sCode = req.params.sCode;
-    const cCode = req.params.cCode;
-    const comp = req.params.comp;
-    let times = [];
-
-    for(var i = 0; i < catalogue.length; i++){
-
-        let foundCourse = new Object();
-        if(catalogue[i].subject === sCode) {
-            foundCourse["subject"] = catalogue[i]["subject"];
-
-            if(catalogue[i].catalog_nbr === cCode){
-                foundCourse["class"] = catalogue[i]["catalog_nbr"];
-
-                if(catalogue[i].course_info[0].ssr_component === comp){
-                    foundCourse["component"] = catalogue[i].course_info[0]["ssr_component"];
-                    foundCourse["startTime"] = catalogue[i].course_info[0]["start_time"];
-                    foundCourse["endTime"] = catalogue[i].course_info[0]["end_time"];
-                    foundCourse["days"] = catalogue[i].course_info[0]["days"];
-                }
-                times.push(foundCourse);
-            }
+    
+        if (courses.length == 0){
+            res.status(404).send(`Course ${subject} was not found`)
         }
-    }
+    });
 
-    if (times.length > 0){
-        res.send(times);
-    }
-
-    if(times.length === 0){
-        res.status(404).send(`Error: course not found.`)
-    }
-});
-
-//used to get timetable for a specific course
-router.get('/subject/:sCode/:cCode', (req,res) => {
+//Implementaion of Course Search Functionality
+//used to get timetable for a specific course based on search parameters
+router.get('/:sCode/:cCode', (req,res) => {
     const sCode = req.params.sCode;
     const cCode = req.params.cCode;
     let times = [];
@@ -227,6 +154,7 @@ router.get('/subject/:sCode/:cCode', (req,res) => {
 
             if(catalogue[i].catalog_nbr === cCode){
                 foundCourse["class"] = catalogue[i]["catalog_nbr"];
+                foundCourse["name"] = catalogue[i]["className"]
 
                 if(catalogue[i].course_info[0]){
                     foundCourse["component"] = catalogue[i].course_info[0]["ssr_component"];
@@ -249,9 +177,16 @@ router.get('/subject/:sCode/:cCode', (req,res) => {
 });
 
 //minimizes repition
-app.use('/api/catalog', router);
+app.use('/api/open', router);
+app.use('/api/admin', admin);
+app.use('/api/secure', secure);
 router.use(express.json());
+admin.use(express.json());
+secure.use(express.json());
+
 //logs listening to console
 app.listen(port, () => {console.log('Listening on port ' + port)});
 
 module.exports = router;
+module.exports = admin;
+module.exports = secure;
