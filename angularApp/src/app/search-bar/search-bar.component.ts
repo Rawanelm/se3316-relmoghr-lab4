@@ -12,7 +12,6 @@ export class SearchBarComponent implements OnInit {
   courses :any =[];
   sub: string = '';
   code: string = '';
-  comp: string = '';
 
   constructor(private CoursesService: CoursesService) {
   }
@@ -28,8 +27,8 @@ export class SearchBarComponent implements OnInit {
 
   //send parameters to service in order to retrieve courses based on user input
   search(){
-    if(this.inputValidation(this.sub) == true && this.inputValidation(this.code) == true && this.inputValidation(this.comp) == true){
-      this.CoursesService.getSearchResults(this.sub,this.code,this.comp).subscribe(courses =>{ this.courses = courses;
+    if(this.inputValidation(this.sub) == true && this.inputValidation(this.code) == true){
+      this.CoursesService.getSearchResults(this.sub,this.code).subscribe(courses =>{ this.courses = courses;
       });
     }
   }

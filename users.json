@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "email": "relmoghr@uwo.ca",
+      "name": "rawan",
+      "password": "12dhfr4",
+      "status": "active",
+      "privilege": "user"
+    },
+    {
+      "email": "helmoghr@uwo.ca",
+      "name": "hadi",
+      "password": "hfkefh78jb",
+      "status": "active",
+      "privilege": "admin"
+    }
+  ]
+}

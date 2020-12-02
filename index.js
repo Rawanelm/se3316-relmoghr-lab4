@@ -14,10 +14,6 @@ const userAdapter= new FileSync('users.json');
 const db = low(adapter);
 const userDB = low(userAdapter);
 
-//what happens if i put [] instead of {schedules: []} ??
-db.defaults({schedules: []});
-userDB.defaults([]);
-
 app.use(express.static(process.cwd() +'/angularApp/dist/angularApp'));
 app.use(express.json());
 
@@ -33,25 +29,21 @@ app.use(bodyParser.urlencoded({
 const read = require('fs');
 const ScheduleFile = read.readFileSync('./schedule.json', 'utf8');
 
-
+//used for users that are not signed in to register
+router.post('/registration/:info', (req,res)=>{
+    const newUser = req.body;
+    
+    if(userDB.get('users').find({email:newUser.email}).value() === undefined){
+    userDB.get('users').push(newUser).write();
+    res.send(newUser);
+    } else { res.send("This email already has an account"); }
+});
 
 //delete a specific schedule from database
 secure.get('/schedules/delete/:schd', (req,res)=>{
     const schd = req.params.schd;
-
-    if(db.get('schedules').find({name:schd}).value() === undefined){
-        res.send("Schedule doesn't exist"); //sends alert when requestedschedule doesn't exist
-    }
-    else{
         db.get('schedules').remove({name:schd}).write();
         res.send("Schedule deleted"); //sends alert when schedule is deleted
-    }
-});
-
-//send course and subject codes list given the schedule name
-router.get('/schedules/print/:schd', (req, res) => {
-    const s = req.params.schd;
-    res.send(db.get('schedules').find({name: s}).value());//sends requested schedules to front end
 });
 
 //gets all the schedules to display them to user
@@ -72,19 +64,6 @@ secure.get('/schedules/check/:schd',(req, res) => {
 });
 
 
-//check if the schedule exits or not 
-secure.get('/schedules/find/:schd',(req, res) => {
-    const sch = req.params.schd;
-
-    if(db.get('schedules').find({name:sch}).value() === undefined){
-       res.send("Shchedule does not exist");
-    }
-    else{
-        db.get('schedules').find({name:sch}).value();
-       res.send(db.get('schedules').find({name:sch}).value());
-    }
-});
-
 //save schedule with content added by user
 secure.post('/schedules/find/:schdName', (req,res) => {
     const foundSchedule = req.body;
@@ -95,7 +74,6 @@ secure.post('/schedules/find/:schdName', (req,res) => {
     db.get('schedules').push(foundSchedule).write();
     res.send(foundSchedule);
 });
-
 
 //Save Schedule Name
 secure.post('/', (req,res) => {

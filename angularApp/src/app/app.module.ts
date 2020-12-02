@@ -9,22 +9,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SchdMenuComponent } from './schd-menu/schd-menu.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { SecureAccessComponent } from './secure-access/secure-access.component';
 
 const Routes =[
   {
     path: 'api/catalog', component: AppComponent
   },
-  {
-    path: '/openAccess', component: SearchBarComponent
-  }
 ]
 @NgModule({
   declarations: [
     AppComponent,
     SearchBarComponent,
     SchdMenuComponent,
-    NavBarComponent
+    AdminPanelComponent,
+    SecureAccessComponent,
   ],
   imports: [
     BrowserModule,

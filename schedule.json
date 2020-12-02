@@ -1,3 +1,7 @@
 {
-  "schedules": []
+  "schedules": [
+    {
+      "name": "rawan"
+    }
+  ]
 }

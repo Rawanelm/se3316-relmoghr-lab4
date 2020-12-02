@@ -17,14 +17,10 @@ export class CoursesService {
   }
 
   // we only the second one since requirements have chnaged slightly 
-  getSearchResults(sub, code, comp){
-    if (sub != "" && code == "" && comp == ""){
-      return(this.http.get(this.searchUrl + `/${sub}`));
-    } else if(sub != "" && code != "" && comp == ""){
+  getSearchResults(sub, code){
+    if(sub != "" && code != "" ){
       return(this.http.get(this.searchUrl + `/${sub}` + `/${code}`));
-    } else if ((sub != "" && code != "" && comp != "")){
-      return(this.http.get(this.searchUrl + `/${sub}` + `/${code}` + `/${comp}`));
-    }
+    } 
   }
 
   viewAllSchds(){
