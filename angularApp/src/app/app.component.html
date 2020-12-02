@@ -1,8 +1,27 @@
 <h1>{{title}}</h1>
 
-<div>
+<div id = "about">
+<h2> About: </h2>
+<p> Western timetable allows you to search thorugh courses avaialbel here at Western. 
+    If you register an account, you will be able to create course lists and add reviews to courses. 
+    If you do not have an account, you can still view some public course lists but will not be able to create them.
+    Register now!     
+</p>
+
+<a>Log in</a>
+<a>Register</a>
+<a routerLink = "/openAccess">Browse as Guest</a>
 
 </div>
+
+<footer>
+    <span (click)= "privacyPolicy()" ><h5>Privacy Policy</h5></span>
+
+    <span (click)= "acceptableUse()" ><h5>Acceptable Use Policy</h5></span>
+
+    <span (click)= "takedown()" ><h5>DMCA Notice & Takedown Policy</h5></span>
+</footer>
+
 
 <!--
 <div>

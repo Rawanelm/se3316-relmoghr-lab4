@@ -14,25 +14,30 @@ h1 {
 
   /*My code starts here*/
 
-  div{
-    align-content: center;
-  }
-  app-search-bar{
-    background-color: #4f2683;
-    align-content: center;
-    width: 100%;
-    border: 3px solid white;
-    display: inline-block;
+  *{
+    align-items: center;
   }
 
-  app-schd-menu{
-    background-color: #4f2683;
-    align-content: center;
-    display: inline-block;
-    border-radius: 5%;
-    border: 3px solid white;
-    width: 100%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-  }
+div{
+  border: #4f2683;
+  width: 90%;
+  border-radius: 5%;
+  align-content: center;
+  background-color:  white;
+}
+
+span{
+  display: inline-block;
+  margin-left: 2%;
+  margin-right: 2%
+
+}
+
+span:hover{
+  background-color:#994dfc;
+}
+
+footer{
+  background-color: #4f2683;
+}
 

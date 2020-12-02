@@ -15,6 +15,9 @@ const Routes =[
   {
     path: 'api/catalog', component: AppComponent
   },
+  {
+    path: '/openAccess', component: SearchBarComponent
+  }
 ]
 @NgModule({
   declarations: [
