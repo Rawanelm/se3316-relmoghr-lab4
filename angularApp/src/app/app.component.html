@@ -1,18 +1,15 @@
 <h1>{{title}}</h1>
 
-<div id = "about">
-<h2> About: </h2>
-<p> Western timetable allows you to search thorugh courses avaialbel here at Western. 
-    If you register an account, you will be able to create course lists and add reviews to courses. 
-    If you do not have an account, you can still view some public course lists but will not be able to create them.
-    Register now!     
-</p>
+<app-schd-menu></app-schd-menu>
 
-<button (click) = "signIn()" >Log in</button>
-<button (click) = "register()" >Rgister</button>
-<!--<a routerLink = "/openAccess">Browse as Guest</a>-->
+<nav>
+    <a routerLink = "/homePage">Home Page</a>
+    <a routerLink = "/openAccess">Browse As Guest</a>
+    <a routerLink = "/secureAccess">My Dashboard</a>
+    <a routerLink = "/adminComponent">Administrators</a>
+</nav>
 
-</div>
+<router-outlet></router-outlet>
 
 <footer>
     <span (click)= "privacyPolicy()" ><h5>Privacy Policy</h5></span>
@@ -23,6 +20,7 @@
 </footer>
 
 
+
 <!--
 <div>
     <app-search-bar></app-search-bar>
@@ -30,4 +28,3 @@
  </div> 
 -->
 
-<router-outlet></router-outlet>

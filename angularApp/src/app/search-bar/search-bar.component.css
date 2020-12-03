@@ -20,6 +20,10 @@ input{
     background-color: grey;
     border: 3px solid black;
 }
+
+#Menu {
+  background-color: #4f2683;
+}
 .column {
     float: left;
     width: 50%;

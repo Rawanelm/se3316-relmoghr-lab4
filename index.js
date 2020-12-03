@@ -10,9 +10,10 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
  
 const adapter = new FileSync('schedule.json');
-const userAdapter= new FileSync('users.json');
+const reviewsAdapter = new FileSync('reviews.json');
 const db = low(adapter);
-const userDB = low(userAdapter);
+const reviewsDB = low(reviewsAdapter);
+
 
 app.use(express.static(process.cwd() +'/angularApp/dist/angularApp'));
 app.use(express.json());
@@ -29,60 +30,6 @@ app.use(bodyParser.urlencoded({
 const read = require('fs');
 const ScheduleFile = read.readFileSync('./schedule.json', 'utf8');
 
-//used for users that are not signed in to register
-router.post('/registration/:info', (req,res)=>{
-    const newUser = req.body;
-    
-    if(userDB.get('users').find({email:newUser.email}).value() === undefined){
-    userDB.get('users').push(newUser).write();
-    res.send(newUser);
-    } else { res.send("This email already has an account"); }
-});
-
-//delete a specific schedule from database
-secure.get('/schedules/delete/:schd', (req,res)=>{
-    const schd = req.params.schd;
-        db.get('schedules').remove({name:schd}).write();
-        res.send("Schedule deleted"); //sends alert when schedule is deleted
-});
-
-//gets all the schedules to display them to user
-router.get('/schedules/all', (req, res) => {
-    res.send(db.get('schedules').value()); //sends all schedule to front end
-});
-
-//check if the schedule exits or not 
-secure.get('/schedules/check/:schd',(req, res) => {
-    const sch = req.params.schd;
-
-    if(db.get('schedules').find({Schd:{}}).find({name:sch}).value() === undefined){
-        res.send({status: 1});
-    }
-    else{
-        res.send({status: 4});
-    }
-});
-
-
-//save schedule with content added by user
-secure.post('/schedules/find/:schdName', (req,res) => {
-    const foundSchedule = req.body;
-    console.log(foundSchedule);
-    foundSchedule.stringify();
-    console.log(foundSchedule);
-    db.get('schedules').remove({name: foundSchedule.schdName.name }).write();
-    db.get('schedules').push(foundSchedule).write();
-    res.send(foundSchedule);
-});
-
-//Save Schedule Name
-secure.post('/', (req,res) => {
-    const schedule = req.body;
-    console.log(schedule);
-    db.get('schedules').push(schedule).write();
-    res.send(schedule);
-});
-
 //enable us to read and parse JSON file
 const fs = require('fs');
 const { stringify } = require('querystring');
@@ -96,27 +43,6 @@ app.use((req, res ,next) => {
     next();
 });
 
-
-router.get('/:code', (req,res) => {
-    const sCode = req.params.code;
-    const courses = catalogue.filter( c => c.subject == sCode);
-    
-    console.log(`GET request for ${req.url}`);
-      
-        if (courses.length >0){
-    
-            for(var i = 0; i<courses.length;i++){
-            courseCodes[i] = courses[i].catalog_nbr;
-            }
-    
-        res.send(courseCodes);
-        }
-    
-        if (courses.length == 0){
-            res.status(404).send(`Course ${subject} was not found`)
-        }
-    });
-
 //Implementaion of Course Search Functionality
 //used to get timetable for a specific course based on search parameters
 router.get('/:sCode/:cCode', (req,res) => {
@@ -125,36 +51,112 @@ router.get('/:sCode/:cCode', (req,res) => {
     let times = [];
 
     for(var i = 0; i < catalogue.length; i++){
-
         let foundCourse = new Object();
         if(catalogue[i].subject === sCode) {
             foundCourse["subject"] = catalogue[i]["subject"];
 
             if(catalogue[i].catalog_nbr === cCode){
                 foundCourse["class"] = catalogue[i]["catalog_nbr"];
-                foundCourse["name"] = catalogue[i]["className"]
+                foundCourse["name"] = catalogue[i]["className"];
+                foundCourse["description"] = catalogue[i]["catalog_description"]
 
                 if(catalogue[i].course_info[0]){
                     foundCourse["component"] = catalogue[i].course_info[0]["ssr_component"];
                     foundCourse["startTime"] = catalogue[i].course_info[0]["start_time"];
                     foundCourse["endTime"] = catalogue[i].course_info[0]["end_time"];
                     foundCourse["days"] = catalogue[i].course_info[0]["days"];
+                    foundCourse["courseInfo"] = catalogue[i]["course_info"];
                 }
                 times.push(foundCourse);
             }
         }
     }
-
     if (times.length > 0){
         res.send(times);
     }
+});
 
-    if(times.length === 0){
-        res.status(404).send(`${comp} not found.`)
+//this works but is not connected to front end yet 
+//puts the review in the database
+secure.post('/reviews/:review', (req,res)=>{
+    const newReview = req.body;
+    let go = false;
+    for(var i = 0; i < catalogue.length; i++){
+        if(catalogue[i].subject === newReview.subject) {
+            if(catalogue[i].catalog_nbr === newReview.courseCode){
+                go = true; 
+            }
+        }
+    }
+    if(go){
+        reviewsDB.get('reviews').push(newReview).write();
+        res.send({status:1});
+    } else {
+        res.send({status:4});
+    }
+    
+});
+
+//There is something wrong with my get requests
+//gets the reviews for a specific course 
+router.get("/reviews/:course", (req,res)=>{
+    const courseReviews = req.body;
+    res.send(reviewsDB.get('reviews').find({subject:courseReviews.subject}).value());
+});
+
+
+//delete a specific schedule from database
+secure.get('/schedules/delete/:schd', (req,res)=>{
+    const schd = req.params.schd;
+        db.get('schedules').remove({name:schd}).write();
+        res.send("Schedule deleted"); //sends alert when schedule is deleted
+});
+
+//gets the most recent 10 schedules to display them to user
+//this doesn't work like at all 
+router.get('/schedules/all', (req, res) => {
+    let scheds = db.get('schedules').find({visibility:"public"}).value();
+    res.send(db.get('schedules').find({visibility:"public"}).value());
+    console.log(db.get('schedules').find({visibility:"public"}).value());
+    console.log(schedules);
+    let topTen = [];
+    for(let i = schedules.length; i > 0; i--){
+        topTen[(schedules.length - i)]= schedules[(i-1)];
+    }
+    console.log(topTen);
+    res.send(topTen); //sends all public schedules to front end
+});
+
+//gets schedules of a specific user
+secure.get('/schd/:user', (req,res) => {
+    res.send(db.get('schedules').find({userName:user.name}).value());
+})
+
+//check if the schedule exits or not 
+secure.get('/schedules/check/:schd',(req, res) => {
+    const sch = req.params.schd;
+
+    if(db.get('schedules').find({Schd:{}}).find({name:sch}).value() === undefined){
+        res.send({status: 1});
+    }
+    else{
+        res.send({status: 4});
     }
 });
 
-//minimizes repition
+//save schedule with content added by user
+secure.post('/schedules/find/:schdName', (req,res) => {
+    const foundSchedule = req.body;
+    console.log(foundSchedule);
+    //foundSchedule.stringify();
+    console.log(foundSchedule);
+    //db.get('schedules').remove({name: foundSchedule.schdName.name }).write();
+    db.get('schedules').push(foundSchedule).write();
+    res.send(foundSchedule);
+});
+
+
+//minimizes repitition
 app.use('/api/open', router);
 app.use('/api/admin', admin);
 app.use('/api/secure', secure);

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "lab5-784d2": {
+      "hosting": {
+        "angularApp": [
+          "lab5-784d2"
+        ]
+      }
+    }
+  }
+}

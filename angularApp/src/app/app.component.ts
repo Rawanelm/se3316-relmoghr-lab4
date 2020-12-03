@@ -13,14 +13,6 @@ export class AppComponent {
   constructor(){
   }
 
-  register(){
-      
-  }
-
-  signIn(){
-    
-  }
-
   privacyPolicy(){
     var myWindow = window.open("", "MsgWindow", "width=700,height=700");
     myWindow.document.write("<p>This is the privacy policy: </p>");

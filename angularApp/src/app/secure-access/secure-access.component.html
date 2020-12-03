@@ -1,1 +1,19 @@
-<p>secure-access works!</p>
+
+<app-open-access></app-open-access>
+
+<div>
+    <label>Add a Course Review</label>
+
+    <input placeholder = "Subject" [(ngModel)]= "subject">
+    <input placeholder = "Course Code" [(ngModel)]= "courseCode">
+    <br>
+
+    <textarea placeholder = "Review" rows = "5" columns= "50" [(ngModel)]= "review">
+        </textarea>
+
+    <button (click) = "postReview">Submit Review</button>
+</div>
+
+
+
+

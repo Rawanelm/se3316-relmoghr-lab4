@@ -16,7 +16,6 @@ export class CoursesService {
     return this.list;
   }
 
-  // we only the second one since requirements have chnaged slightly 
   getSearchResults(sub, code){
     if(sub != "" && code != "" ){
       return(this.http.get(this.searchUrl + `/${sub}` + `/${code}`));
@@ -33,6 +32,14 @@ export class CoursesService {
 
   checkScheduleName(scheduleName){
     return this.http.get('/api/open/schedules/check/'+ `${scheduleName}`);
+  }
+  
+  addReview(review){
+    return this.http.post('/api/secure/reviews/', {review});
+  }
+
+  viewReviews(course){
+    return this.http.get('/api/open/reviews/'+ `${course}`);
   }
   
   /*

@@ -1,10 +1,13 @@
-<h3>Search Courses</h3>
 
+<div id="Menu">
+    <h3>Search Courses</h3>
+    
     <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="sub" placeholder = "Subject Code"/>
     <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="code" placeholder = "Course Code"/>
     
     <button (click)= "search()">Search</button>
     <button (click)= "viewAll()" >View All Courses</button>
+</div>
 
 <div id="results">
     <tr *ngFor =  'let course of courses'>

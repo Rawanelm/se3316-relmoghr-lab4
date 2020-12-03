@@ -2,6 +2,18 @@
   "schedules": [
     {
       "name": "rawan"
+    },
+    {
+      "name": "LIST",
+      "user": "RAWAN",
+      "dateModified": "today",
+      "visibility": "public"
+    },
+    {
+      "name": "LISTSECOND",
+      "user": "RAWAN",
+      "dateModified": "today",
+      "visibility": "private"
     }
   ]
 }

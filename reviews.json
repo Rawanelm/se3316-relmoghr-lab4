@@ -1,0 +1,36 @@
+{
+  "reviews": [
+    {
+      "course": {
+        "subjectCode": "WRITING",
+        "courseCode": "1020F"
+      },
+      "review": "This class was a lot of fun",
+      "visibility": "not hidden"
+    },
+    {
+      "course": {
+        "subjectCode": "WRITING",
+        "courseCode": "1020F"
+      },
+      "review": "I hated this class",
+      "visibility": "hidden"
+    },
+    {
+      "course": {
+        "subjectCode": "WRITING",
+        "courseCode": "1020F"
+      },
+      "review": "The professor was amazing. The lectures were really engaing.",
+      "visibility": "not hidden"
+    },
+    {
+      "subject": "WRITING",
+      "courseCode": "1020F",
+      "date": "today",
+      "user": "rawan",
+      "review": "The professor was amazing. The lectures were really engaing.",
+      "visibility": "not hidden"
+    }
+  ]
+}

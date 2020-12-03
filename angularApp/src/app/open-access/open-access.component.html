@@ -1,0 +1,12 @@
+
+<app-search-bar></app-search-bar>
+
+<h3 (click)="pubSchd()">Public Schedules</h3>
+
+<div id="results">
+    <tr *ngFor =  'let schd of publicSchd'>
+        <ol>{{schd.name}}</ol>
+    </tr>
+    <br>
+</div>
+
