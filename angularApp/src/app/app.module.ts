@@ -11,7 +11,6 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
-import { SchdMenuComponent } from './schd-menu/schd-menu.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { SecureAccessComponent } from './secure-access/secure-access.component';
 import { OpenAccessComponent } from './open-access/open-access.component';
@@ -32,7 +31,6 @@ const Routes =[
   declarations: [
     AppComponent,
     SearchBarComponent,
-    SchdMenuComponent,
     AdminPanelComponent,
     SecureAccessComponent,
     OpenAccessComponent,

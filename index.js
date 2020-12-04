@@ -10,7 +10,7 @@ var stringSimilarity = require('string-similarity');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
  
-const adapter = new FileSync('schedule.json');
+const adapter = new FileSync('schedule1.json');
 const reviewsAdapter = new FileSync('reviews.json');
 const db = low(adapter);
 const reviewsDB = low(reviewsAdapter);
@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 const read = require('fs');
-const ScheduleFile = read.readFileSync('./schedule.json', 'utf8');
+const ScheduleFile = read.readFileSync('./schedule1.json', 'utf8');
 const reviewsFile = read.readFileSync('./reviews.json', 'utf-8');
 const scheduleReader = JSON.parse(ScheduleFile);
 const reviewReader = JSON.parse(reviewsFile);
@@ -56,8 +56,9 @@ router.get('/search/:keyword', (req,res) => {
         let foundCourse = new Object;
 
         var str = catalogue[i]["catalog_nbr"];
+        var str2 = catalogue[i]["className"];
 
-        var match2 = str2.toUpperCase()
+        var match2 = str2.toUpperCase();
         if(str.includes(keyword)|| match2.includes(keyword)){
             foundCourse["subject"] = catalogue[i]["subject"];
             foundCourse["class"] = catalogue[i]["catalog_nbr"];
@@ -120,27 +121,12 @@ router.get('/:sCode/:cCode', (req,res) => {
     }
 });
 
-
-//this works but is not connected to front end yet 
 //puts the review in the database
-secure.post('/reviews', (req,res)=>{
+secure.post('/review', (req,res)=>{
     const newReview = req.body;
-    let go = false;
-
-    //this makes sure that chosen course exists
-    for(var i = 0; i < catalogue.length; i++){
-        if(catalogue[i].subject === newReview.subject) {
-            if(catalogue[i].catalog_nbr === newReview.courseCode){
-                go = true; 
-            }
-        }
-    }
-    if(go){
         reviewsDB.get('reviews').push(newReview).write();
         res.send({status:1});
-    } else {
-        res.send({status:4});
-    }
+    
 });
 
 //This works
@@ -208,7 +194,7 @@ secure.get('/schd/:user', (req,res) => {
 secure.get('/schedules/check/:schd',(req, res) => {
     const sch = req.params.schd;
 
-    if(db.get('schedules').find({Schd:{}}).find({name:sch}).value() === undefined){
+    if(db.get('schedules').find({name:sch}).value() === undefined){
         res.send({status: 1});
     }
     else{
@@ -217,15 +203,12 @@ secure.get('/schedules/check/:schd',(req, res) => {
 });
 
 //save schedule with content added by user
-secure.post('/schedules/:schdName', (req,res) => {
+secure.post('/schedule', (req,res) => {
     const foundSchedule = req.body;
     console.log(foundSchedule);
-    //there is something wrong with this set up
-    db.get('schedules').remove({name: foundSchedule.name }).write();
     db.get('schedules').push(foundSchedule).write();
     res.send(foundSchedule);
 });
-
 
 //minimizes repitition
 app.use('/api/open', router);

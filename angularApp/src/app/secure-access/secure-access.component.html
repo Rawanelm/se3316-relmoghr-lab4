@@ -34,17 +34,24 @@
 </div>
 
 <div>
-    <a>View My Shcedules:</a>
+    <h3>Edit Schedule</h3>
+</div>
+
+<div>
+    <h3>View My Schedules:</h3>
+    <button (click)= "viewUser()" >View Schedules</button>
 
     <!--<div id="results" *ngFor =  'let schd of schedules'>
         
-            <ol>{{course.subject}}</ol>
+            <ol>{{schd.name}}</ol>
             <button (click) = "expand()">Expand</button>
             <button (click) = "collapse">Collapse</button>
-            <button (click) = "delete()">Delete</button>
+            <button (click) = "delete(schd.name)">Delete</button>
     
         <br>
     </div>-->
 </div>
+
+
 
 

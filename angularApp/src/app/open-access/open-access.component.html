@@ -6,8 +6,11 @@
 
 <div id="results" *ngFor =  'let schd of publicSchd'>
         <ol>{{schd.name}}</ol>
-        <ol></ol>
-        <button (click) = "expand(schd)"></button>
-        <button (click) = "collapse()"></button>
-        <ol>{{course1}}</ol>
+        <ol>{{schd.num}}</ol>
+        <button (click) = "expand(schd)">Expand</button>
+        <button (click) = "collapse()">Collapse</button>
+        
+        <div *ngFor = 'let detail of detailedShcd'>
+                <ol></ol>
+        </div>
 </div>

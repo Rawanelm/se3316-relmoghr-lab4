@@ -25,7 +25,7 @@ export class CoursesService {
 
   //gets the public schedules
   viewAllSchds(){
-    return this.http.get('/api/open/schedules/all');
+    return this.http.get('/api/open/all');
   }
 
   //gets the schedules for a specific user
@@ -35,17 +35,17 @@ export class CoursesService {
 
   //saves a schedule to the database
   saveCoursesToSchd(Schd){
-    return this.http.post('/api/secure/schedules/',{Schd});
+    return this.http.post('/api/secure/schedule',{Schd});
   }
 
   checkScheduleName(scheduleName){
-    return this.http.get('/api/open/schedules/check/'+ `${scheduleName}`);
+    return this.http.get('/api/secure/schedules/check/'+ `${scheduleName}`);
   }
   
   //adds a review to database
   addReview(review){
     console.log(review);
-    return this.http.post('/api/secure/reviews/', {review});
+    return this.http.post('/api/secure/review', {review});
   }
 
   viewReviews(subject,courseCode){

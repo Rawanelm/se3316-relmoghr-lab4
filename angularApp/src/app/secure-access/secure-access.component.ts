@@ -29,11 +29,13 @@ export class SecureAccessComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //adds more input fields for the suer to add courses 
   add(){
     this.courses.push({subject: "", courseCode : ""});
     console.log(this.courses);
   }
 
+  //ensures that schedule exists
   checkScheduleName(){
     this.coursesService.checkScheduleName(this.modSchdName).subscribe(schds => {this.schedules = schds;
       
@@ -51,7 +53,10 @@ export class SecureAccessComponent implements OnInit {
     let number = 0;
     let newSchd = {
       name: "",
-      num: 0
+      num: 0,
+      user: "",
+      visibility: "",
+      dateModified: ""
     }
 
     for(let k =0; k< this.courses.length; k++){
@@ -77,13 +82,8 @@ export class SecureAccessComponent implements OnInit {
     this.counter = 0;
   }
 
-  /*delAll(){
-    this.coursesService.deleteAllSchds().subscribe(list => {this.schedules = list});
-    alert("All Schedules Deleted");
-  }*/
-
   //gets all user schedules 
-  viewAll(){
+  viewUser(){
     this.coursesService.viewUserSchedules().subscribe(schds => {
       this.schedules = schds});
     
@@ -97,8 +97,24 @@ export class SecureAccessComponent implements OnInit {
     }
   }
 
-  //Tested: there is no call to the backend
+  //expands search results
+  expand(){
+
+  }
+
+  //deletes a course list
+  delete(name){
+    this.coursesService.saveCoursesToSchd(name).subscribe(list => {this.schedules = list});
+  }
+
+  //returns search results to Summary view
+  collaps(){
+
+  }
+
   postReview(){
+
+    //ensures that all required fields are entered 
     if(this.subject ==''|| this.courseCode ==''||this.review ==''){
        alert("To add a review, subject, course code, and review fields must nor be empty.")
     } else{

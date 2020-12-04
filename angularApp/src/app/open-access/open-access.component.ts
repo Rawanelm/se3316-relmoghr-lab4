@@ -10,14 +10,13 @@ export class OpenAccessComponent implements OnInit {
 
   courses : any = [];
   publicSchd : any = [];
+  detailedSchd: any =[];
 
   constructor(private CoursesService: CoursesService) {
   }
 
   ngOnInit(): void {
-    //this.CoursesService.viewAllSchds().subscribe(schds =>{ this.publicSchd = schds;
-      //console.log(this.publicSchd);
-    //});
+    
   }
 
   pubSchd(){
@@ -28,8 +27,6 @@ export class OpenAccessComponent implements OnInit {
 
   expand(schedule){
     //add all the courses in the schedule to the array
-
-    
   }
 
   collapse(){

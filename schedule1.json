@@ -1,0 +1,23 @@
+{
+  "schedules": [
+    {
+      "name": "hi",
+      "user": "RAWN",
+      "dateModified": "today",
+      "visibility": "private"
+    },
+    {
+      "Schd": {
+        "name": "HADI",
+        "num": 1,
+        "user": "",
+        "visibility": "",
+        "dateModified": "",
+        "course _1": {
+          "subject": "WRITING",
+          "courseCode": "1020F"
+        }
+      }
+    }
+  ]
+}
