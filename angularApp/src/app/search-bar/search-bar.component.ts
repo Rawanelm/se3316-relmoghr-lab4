@@ -10,6 +10,8 @@ import {CoursesService} from '../courses.service';
 export class SearchBarComponent implements OnInit {
 
   courses :any =[];
+  reviews:any = [];
+  detailedCourse: any = [];
   sub: string = '';
   code: string = '';
   keyword: string = '';
@@ -20,8 +22,13 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  expand(){
+  expand(course){
     //some function to add more details
+    this.CoursesService.viewReviews(course.subject,course.courseCode).subscribe(schds =>{ this.reviews = schds;
+      console.log(this.reviews);
+    });
+
+    this.detailedCourse=this.courses;
   }
 
   keywordSearch(){
@@ -36,6 +43,7 @@ export class SearchBarComponent implements OnInit {
       this.CoursesService.getSearchResults(this.sub,this.code).subscribe(courses =>{ this.courses = courses;
       });
     }
+    console.log(this.courses);
   }
 
 //input sanittization, ensures that input does not contain any html,css, javascript characters

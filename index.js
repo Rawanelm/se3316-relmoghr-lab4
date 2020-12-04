@@ -31,8 +31,8 @@ app.use(bodyParser.urlencoded({
 const read = require('fs');
 const ScheduleFile = read.readFileSync('./schedule.json', 'utf8');
 const reviewsFile = read.readFileSync('./reviews.json', 'utf-8');
-//const schedules = JSON.parse(file);
-//const reviews = JSON.parse(file);
+const schedules = JSON.parse(ScheduleFile);
+const reviews = JSON.parse(reviewsFile);
 
 //enable us to read and parse JSON file
 const fs = require('fs');
@@ -86,7 +86,12 @@ router.get('/:sCode/:cCode', (req,res) => {
                     foundCourse["startTime"] = catalogue[i].course_info[0]["start_time"];
                     foundCourse["endTime"] = catalogue[i].course_info[0]["end_time"];
                     foundCourse["days"] = catalogue[i].course_info[0]["days"];
-                    foundCourse["courseInfo"] = catalogue[i]["course_info"];
+                    foundCourse["class_nbr"] = catalogue[i].course_info[0]["class_nbr"];
+                    foundCourse["descr"] = catalogue[i].course_info[0]["descr"];
+                    foundCourse["facility_ID"] = catalogue[i].course_info[0]["facility_ID"];
+                    foundCourse["campus"] = catalogue[i].course_info[0]["campus"];
+                    foundCourse[" enrl_stat"] = catalogue[i].course_info[0][" enrl_stat"];
+                    foundCourse["class_section"] = catalogue[i].course_info[0]["class_section"];
                 }
                 times.push(foundCourse);
             }
@@ -101,7 +106,7 @@ router.get('/:sCode/:cCode', (req,res) => {
 
 //this works but is not connected to front end yet 
 //puts the review in the database
-secure.post('/reviews/:review', (req,res)=>{
+secure.post('/reviews', (req,res)=>{
     const newReview = req.body;
     let go = false;
 
@@ -121,11 +126,12 @@ secure.post('/reviews/:review', (req,res)=>{
     }
 });
 
-//this hows one course as well
+
 //gets the reviews for a specific course 
-router.get("/reviews/find/:course", (req,res)=>{
-    const courseReviews = req.params.course;
-    res.send(reviewsDB.get('reviews').find({subject:courseReviews}).value());
+router.get("/reviews/find/:subject/:code", (req,res)=>{
+    const courseReviews = req.params.code;
+    console.log(courseReviews)
+    res.send(reviewsDB.get('reviews').find({courseCode:courseReviews}).value());
 });
 
 

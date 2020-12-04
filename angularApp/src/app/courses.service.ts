@@ -48,8 +48,8 @@ export class CoursesService {
     return this.http.post('/api/secure/reviews/', {review});
   }
 
-  viewReviews(course){
-    return this.http.get('/api/open/reviews/'+ `${course}`);
+  viewReviews(subject,courseCode){
+    return this.http.get('/api/open/reviews/find/'+ `${subject}/` + `${courseCode}`);
   }
   
   deleteSchd(schdName){
