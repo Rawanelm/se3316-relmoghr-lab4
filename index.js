@@ -44,7 +44,23 @@ app.use((req, res ,next) => {
     next();
 });
 
-
+//keyword search 
+router.get('/search/:keyword', (req,res) => {
+    const keyword = req.params.keyword;
+    console.log(keyword);
+    let difference = (2/(keyword.length));
+    console.log(difference);
+    let result =[];
+    
+    for(var i =0;i < catalogue.length; i++){
+        if(stringSimilarity.compareTwoStrings(keyword, catalogue[i].catalog_nbr) >= difference){
+            console.log("similar");
+            result.push(catalogue[i]);
+        }
+    }
+    res.send(result);
+    });
+    
 //Implementaion of Course Search Functionality
 //used to get timetable for a specific course based on search parameters
 router.get('/:sCode/:cCode', (req,res) => {
