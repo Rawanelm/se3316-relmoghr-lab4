@@ -1,9 +1,6 @@
 {
   "schedules": [
     {
-      "name": "rawan"
-    },
-    {
       "name": "LIST",
       "user": "RAWAN",
       "dateModified": "today",
@@ -13,25 +10,25 @@
       "name": "LISTSECOND",
       "user": "RAWAN",
       "dateModified": "today",
-      "visibility": "private"
+      "visibility": "public"
     },
     {
       "name": "hi",
       "user": "RAWAN",
       "dateModified": "today",
-      "visibility": "private"
+      "visibility": "public"
     },
     {
       "name": "hi",
       "user": "RAWAN",
       "dateModified": "today",
-      "visibility": "private"
+      "visibility": "public"
     },
     {
       "name": "hi",
       "user": "RAWN",
       "dateModified": "today",
-      "visibility": "private"
+      "visibility": "public"
     }
   ]
 }

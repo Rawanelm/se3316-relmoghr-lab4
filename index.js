@@ -32,7 +32,7 @@ const read = require('fs');
 const ScheduleFile = read.readFileSync('./schedule.json', 'utf8');
 const reviewsFile = read.readFileSync('./reviews.json', 'utf-8');
 const scheduleReader = JSON.parse(ScheduleFile);
-const reviews = JSON.parse(reviewsFile);
+const reviewReader = JSON.parse(reviewsFile);
 
 //enable us to read and parse JSON file
 const fs = require('fs');
@@ -126,12 +126,21 @@ secure.post('/reviews', (req,res)=>{
     }
 });
 
-
+//This works
 //gets the reviews for a specific course 
 router.get("/reviews/find/:subject/:code", (req,res)=>{
-    const courseReviews = req.params.code;
-    console.log(courseReviews)
-    res.send(reviewsDB.get('reviews').find({courseCode:courseReviews}).value());
+    const code = req.params.code;
+    const sub = req.params.subject;
+    let revs = [], s =[];
+    console.log(reviewReader.reviews.length);
+    for(let i = 0; i<reviewReader.reviews.length; i++){
+        s = reviewsDB.get('reviews').value();
+        if(s[i].subject == sub && s[i].courseCode == code && s[i].visibility!= "hidden"){  
+            revs.push(s[i]);
+        }
+    }
+    console.log(revs);
+    res.send(revs);
 });
 
 
@@ -144,12 +153,26 @@ secure.get('/schedules/delete/:schd', (req,res)=>{
 
 //gets the most recent 10 schedules to display them to user
 //this doesn't work like at all 
-router.get('/schedules/all', (req, res) => {
-    const v = "public";
-    res.send( db.get('schedules').find({visibility:v}).value()); //sends all public schedules to front end
+router.get('/all', (req, res) => {
+    
+    let scheds = [], s =[];
+    
+    for(let i = (scheduleReader.schedules.length-1); i>=0; i--){
+        s = db.get('schedules').value();
+        console.log(s[i])
+        if(s[i].visibility == "public"){
+            console.log(s[i].name);
+            scheds.push(s[i]);
+        }
+    }
+
+    for(let i = 0; i<(scheduleReader.schedules.length-10); i++){
+        schds.shift();
+    }
+    res.send(scheds); //sends all public schedules to front end
 });
 
-//This works but it only gives one result and we need all of them 
+//This works 
 //gets schedules of a specific user
 secure.get('/schd/:user', (req,res) => {
     const user = req.params.user;
@@ -158,13 +181,11 @@ secure.get('/schd/:user', (req,res) => {
     for(let i = 0; i<scheduleReader.schedules.length; i++){
         s = db.get('schedules').value();
         console.log(s[i])
-
         if(s[i].user == user){
             console.log(s[i].name);
             scheds.push(s[i]);
         }
     }
-
     res.send(scheds);
 })
 
