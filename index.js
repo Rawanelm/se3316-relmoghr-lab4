@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({
 const read = require('fs');
 const ScheduleFile = read.readFileSync('./schedule.json', 'utf8');
 const reviewsFile = read.readFileSync('./reviews.json', 'utf-8');
-const schedules = JSON.parse(ScheduleFile);
+const scheduleReader = JSON.parse(ScheduleFile);
 const reviews = JSON.parse(reviewsFile);
 
 //enable us to read and parse JSON file
@@ -153,7 +153,19 @@ router.get('/schedules/all', (req, res) => {
 //gets schedules of a specific user
 secure.get('/schd/:user', (req,res) => {
     const user = req.params.user;
-    res.send(db.get('schedules').find({user:user}).value());
+    let scheds = [], s =[];
+    
+    for(let i = 0; i<scheduleReader.schedules.length; i++){
+        s = db.get('schedules').value();
+        console.log(s[i])
+
+        if(s[i].user == user){
+            console.log(s[i].name);
+            scheds.push(s[i]);
+        }
+    }
+
+    res.send(scheds);
 })
 
 //check if the schedule exits or not 
