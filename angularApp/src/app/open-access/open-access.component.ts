@@ -14,9 +14,9 @@ export class OpenAccessComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.CoursesService.viewAllSchds().subscribe(schds =>{ this.publicSchd = schds;
-      console.log(this.publicSchd);
-    });
+    //this.CoursesService.viewAllSchds().subscribe(schds =>{ this.publicSchd = schds;
+      //console.log(this.publicSchd);
+    //});
   }
 
   pubSchd(){

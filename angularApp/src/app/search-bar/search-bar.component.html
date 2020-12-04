@@ -6,19 +6,25 @@
     <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="code" placeholder = "Course Code"/>
     
     <button (click)= "search()">Search</button>
-    <button (click)= "viewAll()" >View All Courses</button>
 </div>
 
-<div id="results">
-    <tr *ngFor =  'let course of courses'>
+<div id="results" *ngFor =  'let course of courses'>
+   <!-- <tr *ngFor =  'let course of courses'>-->
         <ol>{{course.subject}}</ol>
         <ol>{{course.class}}</ol>
         <ol>{{course.component}}</ol>
         <ol>{{course.startTime}}</ol>
         <ol>{{course.endTime}}</ol>
         <ol>{{course.days}}</ol>
-    </tr>
+        <button (click) = "expand()">Expand</button>
+    <!--</tr>-->
     <br>
+</div>
+
+<div>
+    <label>Keyword Search:</label>
+    <input placeholder = "Keyword" [(ngModel)]="keyword">
+    <button (click) = "keywordSearch()">SSearch</button>
 </div>
 
 <router-outlet></router-outlet>

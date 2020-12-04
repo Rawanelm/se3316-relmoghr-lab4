@@ -12,6 +12,7 @@ export class SearchBarComponent implements OnInit {
   courses :any =[];
   sub: string = '';
   code: string = '';
+  keyword: string = '';
 
   constructor(private CoursesService: CoursesService) {
   }
@@ -19,10 +20,14 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-//call service function to retrieve information for all courses
- viewAll(){
-    this.CoursesService.getSubjects().subscribe(courses =>{ this.courses = courses;
-    });
+  expand(){
+    //some function to add more details
+  }
+
+  keywordSearch(){
+      if(this.keyword.length < 4){
+        alert("please enter at least 4 characters for keyword search");
+      }
   }
 
   //send parameters to service in order to retrieve courses based on user input

@@ -5,6 +5,7 @@ const router = express.Router();
 const secure = express.Router();
 const admin = express.Router();
 const bodyParser = require('body-parser');
+var stringSimilarity = require('string-similarity');
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
@@ -43,6 +44,7 @@ app.use((req, res ,next) => {
     next();
 });
 
+
 //Implementaion of Course Search Functionality
 //used to get timetable for a specific course based on search parameters
 router.get('/:sCode/:cCode', (req,res) => {
@@ -75,6 +77,7 @@ router.get('/:sCode/:cCode', (req,res) => {
         res.send(times);
     }
 });
+
 
 //this works but is not connected to front end yet 
 //puts the review in the database
@@ -115,10 +118,10 @@ secure.get('/schedules/delete/:schd', (req,res)=>{
 //gets the most recent 10 schedules to display them to user
 //this doesn't work like at all 
 router.get('/schedules/all', (req, res) => {
+
+    console.log("here");
     let scheds = db.get('schedules').find({visibility:"public"}).value();
-    res.send(db.get('schedules').find({visibility:"public"}).value());
-    console.log(db.get('schedules').find({visibility:"public"}).value());
-    console.log(schedules);
+    
     let topTen = [];
     for(let i = schedules.length; i > 0; i--){
         topTen[(schedules.length - i)]= schedules[(i-1)];
@@ -147,10 +150,8 @@ secure.get('/schedules/check/:schd',(req, res) => {
 //save schedule with content added by user
 secure.post('/schedules/find/:schdName', (req,res) => {
     const foundSchedule = req.body;
-    console.log(foundSchedule);
-    //foundSchedule.stringify();
-    console.log(foundSchedule);
-    //db.get('schedules').remove({name: foundSchedule.schdName.name }).write();
+    //there is something wrong with this set up
+    db.get('schedules').remove({name: foundSchedule.schdName.name }).write();
     db.get('schedules').push(foundSchedule).write();
     res.send(foundSchedule);
 });

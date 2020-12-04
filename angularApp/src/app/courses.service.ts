@@ -34,6 +34,7 @@ export class CoursesService {
     return this.http.get('/api/open/schedules/check/'+ `${scheduleName}`);
   }
   
+  //this is not working
   addReview(review){
     return this.http.post('/api/secure/reviews/', {review});
   }
