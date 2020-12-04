@@ -53,10 +53,6 @@ export class CoursesService {
   }
   
   deleteSchd(schdName){
-
+    return this.http.get('/api/secure/schedules/delete/'+ `${schdName}`);
   }
-  /*
-  deleteAllSchds(){
-    return this.http.get('/api/open/schedules/del/all');
-  }*/
 }

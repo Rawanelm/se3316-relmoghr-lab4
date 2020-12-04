@@ -50,19 +50,36 @@ app.use((req, res ,next) => {
 //keyword search but it does not work becuase there is an error
 router.get('/search/:keyword', (req,res) => {
     const keyword = req.params.keyword;
-    console.log(keyword);
-    let difference = (2/(keyword.length));
-    console.log(difference);
     let result =[];
     
     for(var i =0; i < catalogue.length; i++){
-        if(stringSimilarity.compareTwoStrings(keyword, catalogue[i]["catalog_nbr"]) >= difference){
-            console.log("similar");
-            result.push(catalogue[i]);
+        let foundCourse = new Object;
+
+        var str = catalogue[i]["catalog_nbr"];
+
+        var match2 = str2.toUpperCase()
+        if(str.includes(keyword)|| match2.includes(keyword)){
+            foundCourse["subject"] = catalogue[i]["subject"];
+            foundCourse["class"] = catalogue[i]["catalog_nbr"];
+            foundCourse["name"] = catalogue[i]["className"];
+            foundCourse["description"] = catalogue[i]["catalog_description"]
+                if(catalogue[i].course_info[0]){
+                    foundCourse["component"] = catalogue[i].course_info[0]["ssr_component"];
+                    foundCourse["startTime"] = catalogue[i].course_info[0]["start_time"];
+                    foundCourse["endTime"] = catalogue[i].course_info[0]["end_time"];
+                    foundCourse["days"] = catalogue[i].course_info[0]["days"];
+                    foundCourse["class_nbr"] = catalogue[i].course_info[0]["class_nbr"];
+                    foundCourse["descr"] = catalogue[i].course_info[0]["descr"];
+                    foundCourse["facility_ID"] = catalogue[i].course_info[0]["facility_ID"];
+                    foundCourse["campus"] = catalogue[i].course_info[0]["campus"];
+                    foundCourse[" enrl_stat"] = catalogue[i].course_info[0][" enrl_stat"];
+                    foundCourse["class_section"] = catalogue[i].course_info[0]["class_section"];
+                }
+            result.push(foundCourse);
         }
     }
     res.send(result);
-    });
+});
 
 //Implementaion of Course Search Functionality
 //used to get timetable for a specific course based on search parameters
@@ -154,9 +171,7 @@ secure.get('/schedules/delete/:schd', (req,res)=>{
 //this works
 //gets the most recent 10 schedules to display them to user
 router.get('/all', (req, res) => {
-    
-    let scheds = [], s =[];
-    
+    let scheds = [], s =[];    
     for(let i = (scheduleReader.schedules.length-1); i>=0; i--){
         s = db.get('schedules').value();
         console.log(s[i])
