@@ -20,7 +20,7 @@ export class CoursesService {
 
   //send keywords to API and returns its matches
   searchByKeyword(keyword){
-
+    return(this.http.get('/api/open/search/' + `/${keyword}`));
   }
 
   //gets the public schedules

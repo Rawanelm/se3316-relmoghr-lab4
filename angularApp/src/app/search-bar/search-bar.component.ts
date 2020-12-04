@@ -23,26 +23,41 @@ export class SearchBarComponent implements OnInit {
   }
 
   expand(course){
-    //some function to add more details
-    this.CoursesService.viewReviews(course.subject,course.courseCode).subscribe(schds =>{ this.reviews = schds;
+    //
+    this.CoursesService.viewReviews(course.subject,course.class).subscribe(schds =>{ this.reviews = schds;
       console.log(this.reviews);
     });
 
-    this.detailedCourse=this.courses;
+    this.detailedCourse = this.courses;
   }
 
   keywordSearch(){
+    this.courses = [];
+    this.reviews =[];
+    this.detailedCourse = [];
+    //removes white space
+    this.keyword.replace(/\s+/g, '');
       if(this.keyword.length < 4){
         alert("please enter at least 4 characters for keyword search");
+      } else{
+        this.CoursesService.searchByKeyword(this.keyword).subscribe(courses =>{ this.courses = courses;});
       }
   }
 
   //send parameters to service in order to retrieve courses based on user input
   search(){
-    if(this.inputValidation(this.sub) == true && this.inputValidation(this.code) == true){
-      this.CoursesService.getSearchResults(this.sub,this.code).subscribe(courses =>{ this.courses = courses;
-      });
-    }
+    //clears previous search results
+    this.courses = [];
+    this.reviews =[];
+    this.detailedCourse = [];
+
+    if(this.sub!=""||this.code !=""){
+      if(this.inputValidation(this.sub) == true && this.inputValidation(this.code) == true){
+        this.CoursesService.getSearchResults(this.sub,this.code).subscribe(courses =>{ this.courses = courses;
+        });
+      }
+      //sends alert if the user did nt enter the required info
+    }else {alert("subject and course codes are required fields!")}
     console.log(this.courses);
   }
 

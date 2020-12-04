@@ -13,12 +13,12 @@
 </div>
 
 <div id="results" *ngFor =  'let course of courses'>
-        <ol>{{course.subject}}</ol>
-        <ol>{{course.class}}</ol>
-        <ol>{{course.component}}</ol>
-        <ol>{{course.startTime}}</ol>
-        <ol>{{course.endTime}}</ol>
-        <ol>{{course.days}}</ol>
+        <ol class="info">{{course.subject}}</ol>
+        <ol class="info">{{course.class}}</ol>
+        <ol class="info">{{course.component}}</ol>
+        <ol class="info">{{course.startTime}}</ol>
+        <ol class="info">{{course.endTime}}</ol>
+        <ol class="info">{{course.days}}</ol>
         <button (click) = "expand(course)">Expand</button>
 
         <div *ngFor = 'let details of detailedCourse'>
@@ -32,9 +32,12 @@
             <ol>{{details.facility_ID}}</ol>
         </div>
 
-        <div *ngFor = 'let review of reviews'>
+        <div class="rev" *ngFor = 'let review of reviews'>
+            <label>User:</label>
             <ol>{{review.user}}</ol>
+            <label>Date:</label>
             <ol>{{review.date}}</ol>
+            <label>Review:</label>
             <ol>{{review.review}}</ol>
         </div>
     <br>

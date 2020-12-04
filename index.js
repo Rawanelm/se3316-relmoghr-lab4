@@ -151,8 +151,8 @@ secure.get('/schedules/delete/:schd', (req,res)=>{
         res.send("Schedule deleted"); //sends alert when schedule is deleted
 });
 
+//this works
 //gets the most recent 10 schedules to display them to user
-//this doesn't work like at all 
 router.get('/all', (req, res) => {
     
     let scheds = [], s =[];
