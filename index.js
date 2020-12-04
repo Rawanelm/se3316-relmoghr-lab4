@@ -30,6 +30,9 @@ app.use(bodyParser.urlencoded({
 
 const read = require('fs');
 const ScheduleFile = read.readFileSync('./schedule.json', 'utf8');
+const reviewsFile = read.readFileSync('./reviews.json', 'utf-8');
+//const schedules = JSON.parse(file);
+//const reviews = JSON.parse(file);
 
 //enable us to read and parse JSON file
 const fs = require('fs');
@@ -44,7 +47,7 @@ app.use((req, res ,next) => {
     next();
 });
 
-//keyword search 
+//keyword search but it does not work becuase there is an error
 router.get('/search/:keyword', (req,res) => {
     const keyword = req.params.keyword;
     console.log(keyword);
@@ -52,15 +55,15 @@ router.get('/search/:keyword', (req,res) => {
     console.log(difference);
     let result =[];
     
-    for(var i =0;i < catalogue.length; i++){
-        if(stringSimilarity.compareTwoStrings(keyword, catalogue[i].catalog_nbr) >= difference){
+    for(var i =0; i < catalogue.length; i++){
+        if(stringSimilarity.compareTwoStrings(keyword, catalogue[i]["catalog_nbr"]) >= difference){
             console.log("similar");
             result.push(catalogue[i]);
         }
     }
     res.send(result);
     });
-    
+
 //Implementaion of Course Search Functionality
 //used to get timetable for a specific course based on search parameters
 router.get('/:sCode/:cCode', (req,res) => {
@@ -89,6 +92,7 @@ router.get('/:sCode/:cCode', (req,res) => {
             }
         }
     }
+    console.log(times);
     if (times.length > 0){
         res.send(times);
     }
@@ -100,6 +104,8 @@ router.get('/:sCode/:cCode', (req,res) => {
 secure.post('/reviews/:review', (req,res)=>{
     const newReview = req.body;
     let go = false;
+
+    //this makes sure that chosen course exists
     for(var i = 0; i < catalogue.length; i++){
         if(catalogue[i].subject === newReview.subject) {
             if(catalogue[i].catalog_nbr === newReview.courseCode){
@@ -113,14 +119,13 @@ secure.post('/reviews/:review', (req,res)=>{
     } else {
         res.send({status:4});
     }
-    
 });
 
-//There is something wrong with my get requests
+//this hows one course as well
 //gets the reviews for a specific course 
-router.get("/reviews/:course", (req,res)=>{
-    const courseReviews = req.body;
-    res.send(reviewsDB.get('reviews').find({subject:courseReviews.subject}).value());
+router.get("/reviews/find/:course", (req,res)=>{
+    const courseReviews = req.params.course;
+    res.send(reviewsDB.get('reviews').find({subject:courseReviews}).value());
 });
 
 
@@ -134,21 +139,15 @@ secure.get('/schedules/delete/:schd', (req,res)=>{
 //gets the most recent 10 schedules to display them to user
 //this doesn't work like at all 
 router.get('/schedules/all', (req, res) => {
-
-    console.log("here");
-    let scheds = db.get('schedules').find({visibility:"public"}).value();
-    
-    let topTen = [];
-    for(let i = schedules.length; i > 0; i--){
-        topTen[(schedules.length - i)]= schedules[(i-1)];
-    }
-    console.log(topTen);
-    res.send(topTen); //sends all public schedules to front end
+    const v = "public";
+    res.send( db.get('schedules').find({visibility:v}).value()); //sends all public schedules to front end
 });
 
+//This works but it only gives one result and we need all of them 
 //gets schedules of a specific user
 secure.get('/schd/:user', (req,res) => {
-    res.send(db.get('schedules').find({userName:user.name}).value());
+    const user = req.params.user;
+    res.send(db.get('schedules').find({user:user}).value());
 })
 
 //check if the schedule exits or not 
@@ -164,10 +163,11 @@ secure.get('/schedules/check/:schd',(req, res) => {
 });
 
 //save schedule with content added by user
-secure.post('/schedules/find/:schdName', (req,res) => {
+secure.post('/schedules/:schdName', (req,res) => {
     const foundSchedule = req.body;
+    console.log(foundSchedule);
     //there is something wrong with this set up
-    db.get('schedules').remove({name: foundSchedule.schdName.name }).write();
+    db.get('schedules').remove({name: foundSchedule.name }).write();
     db.get('schedules').push(foundSchedule).write();
     res.send(foundSchedule);
 });

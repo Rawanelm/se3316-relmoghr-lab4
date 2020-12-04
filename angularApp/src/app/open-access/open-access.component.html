@@ -1,12 +1,12 @@
 
 <app-search-bar></app-search-bar>
 
-<h3 (click)="pubSchd()">Public Schedules</h3>
+<a (click)="pubSchd()">Public Schedules</a>
 
-<div id="results">
-    <tr *ngFor =  'let schd of publicSchd'>
+<div id="results" *ngFor =  'let schd of publicSchd'>
         <ol>{{schd.name}}</ol>
-    </tr>
-    <br>
+        <ol></ol>
+        <button (click) = "expand(schd)"></button>
+        <button (click) = "collapse()"></button>
+        <ol>{{course1}}</ol>
 </div>
-

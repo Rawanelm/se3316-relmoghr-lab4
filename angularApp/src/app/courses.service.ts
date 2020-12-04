@@ -11,31 +11,40 @@ export class CoursesService {
 
   list: any = [];
 
-  getSubjects(){
-    this.list = this.http.get(this.searchUrl);
-    return this.list;
-  }
-
+  //sends requested course and returns information about it
   getSearchResults(sub, code){
     if(sub != "" && code != "" ){
       return(this.http.get(this.searchUrl + `/${sub}` + `/${code}`));
     } 
   }
 
+  //send keywords to API and returns its matches
+  searchByKeyword(keyword){
+
+  }
+
+  //gets the public schedules
   viewAllSchds(){
     return this.http.get('/api/open/schedules/all');
   }
 
+  //gets the schedules for a specific user
+  viewUserSchedules(){
+    return this.http.get('/api/secure/schd/RAWAN');
+  }
+
+  //saves a schedule to the database
   saveCoursesToSchd(Schd){
-    return this.http.post('/api/open',{Schd});
+    return this.http.post('/api/secure/schedules/',{Schd});
   }
 
   checkScheduleName(scheduleName){
     return this.http.get('/api/open/schedules/check/'+ `${scheduleName}`);
   }
   
-  //this is not working
+  //adds a review to database
   addReview(review){
+    console.log(review);
     return this.http.post('/api/secure/reviews/', {review});
   }
 
@@ -43,6 +52,9 @@ export class CoursesService {
     return this.http.get('/api/open/reviews/'+ `${course}`);
   }
   
+  deleteSchd(schdName){
+
+  }
   /*
   deleteAllSchds(){
     return this.http.get('/api/open/schedules/del/all');

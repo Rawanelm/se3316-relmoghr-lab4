@@ -14,17 +14,37 @@
     <button (click) = "postReview()">Submit Review</button>
 </div>
 
-<a>My Shcedules:</a>
+<div >
+    <h3>Schedule Menu</h3>
 
-<!--<div id="results">
-    <tr *ngFor =  'let course of courses'>
-        <ol>{{course.subject}}</ol>
-        <button (click) = "expand()">Expand</button>
-        <button (click) = "collapse">Collapse</button>
-        <button (click) = "delete()">Delete</button>
-    </tr>
+    <label>Add courses to a schedule:</label>
+    <input type ="text" [(ngModel)]= "modSchdName" placeholder="Schedule to be filled">
     <br>
-</div>-->
+    <div id="userInput" *ngFor="let course of courses; let i = index"> 
+        <label>Subject Code:</label>
+        <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="course.subject" #name="ngModel" name="course{{i}}" placeholder ="Subject Code">
+        <label>Course Code:</label>
+        <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="course.courseCode" #name="ngModel" name="course{{i}}" placeholder ="Course Code">
+    </div>
+    
+    <button (click)= "add()">Add more courses</button>
+    <br>
+    <button (click) = "checkScheduleName()">Save Courses to Schedule</button>
+    <br> 
+</div>
 
+<div>
+    <a>View My Shcedules:</a>
+
+    <!--<div id="results" *ngFor =  'let schd of schedules'>
+        
+            <ol>{{course.subject}}</ol>
+            <button (click) = "expand()">Expand</button>
+            <button (click) = "collapse">Collapse</button>
+            <button (click) = "delete()">Delete</button>
+    
+        <br>
+    </div>-->
+</div>
 
 
