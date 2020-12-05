@@ -5,6 +5,7 @@
 <button (click)= "pubSchd()">View public Shcedules</button>
 
 <div id="results" *ngFor =  'let schd of publicSchd'>
+        
         <ol>{{schd.name}}</ol>
         <ol>{{schd.num}}</ol>
         <button (click) = "expand(schd)">Expand</button>
@@ -14,4 +15,5 @@
                 <ol>{{detail.date}}</ol>
                 <ol>{{details.descr}}</ol>
         </div>
+
 </div>

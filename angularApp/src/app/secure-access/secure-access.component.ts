@@ -5,7 +5,6 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import { AppComponent } from '../app.component';
 import firebase from 'firebase/app';
 
-
 @Component({
   selector: 'app-secure-access',
   templateUrl: './secure-access.component.html',

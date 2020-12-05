@@ -18,12 +18,16 @@ h1 {
     align-items: center;
   }
 
-div{
+ul{
   border: #4f2683;
   width: 90%;
   border-radius: 5%;
   align-content: center;
   background-color:  white;
+}
+
+li{
+  color: white;
 }
 
 span{

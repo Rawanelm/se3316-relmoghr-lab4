@@ -142,14 +142,6 @@ router.get('/:sCode/:cCode', (req,res) => {
     }
 });
 
-//puts the review in the database
-secure.post('/review', (req,res)=>{
-    const newReview = req.body;
-        reviewsDB.get('reviews').push(newReview).write();
-        res.send({status:1});
-    
-});
-
 //This works
 //gets the reviews for a specific course 
 router.get("/reviews/find/:subject/:code", (req,res)=>{
@@ -167,6 +159,14 @@ router.get("/reviews/find/:subject/:code", (req,res)=>{
     res.send(revs);
 });
 
+
+//puts the review in the database
+secure.post('/review', (req,res)=>{
+    const newReview = req.body;
+        reviewsDB.get('reviews').push(newReview).write();
+        res.send({status:1});
+    
+});
 
 //delete a specific schedule from database
 secure.get('/schedules/delete/:schd', (req,res)=>{

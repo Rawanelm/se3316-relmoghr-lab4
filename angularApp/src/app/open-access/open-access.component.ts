@@ -20,14 +20,18 @@ export class OpenAccessComponent implements OnInit {
   }
 
   pubSchd(){
+
     this.CoursesService.viewAllSchds().subscribe(schds =>{ this.publicSchd = schds;
       console.log(this.publicSchd);
     });
+
   }
 
   expand(schedule){
-    //add all the courses in the schedule to the array
+
     this.detailedSchd = this.publicSchd;
+    //add all the courses in the schedule to the array
+
   }
 
   collapse(){
