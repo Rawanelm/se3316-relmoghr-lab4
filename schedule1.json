@@ -31,6 +31,19 @@
           "courseCode": "1020F"
         }
       }
+    },
+    {
+      "Schd": {
+        "name": "OKJRN",
+        "num": 1,
+        "user": "",
+        "visibility": "",
+        "dateModified": 1607138646609,
+        "course _1": {
+          "subject": "SE",
+          "courseCode": "2202A"
+        }
+      }
     }
   ]
 }

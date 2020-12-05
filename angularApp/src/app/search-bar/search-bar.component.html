@@ -34,11 +34,11 @@
 
         <div class="rev" *ngFor = 'let review of reviews'>
             <label>User:</label>
-            <ol>{{review.user}}</ol>
+            <ol>{{review.review.user}}</ol>
             <label>Date:</label>
-            <ol>{{review.date}}</ol>
+            <ol>{{review..review.date}}</ol>
             <label>Review:</label>
-            <ol>{{review.review}}</ol>
+            <ol>{{review.review.review}}</ol>
         </div>
     <br>
 </div>

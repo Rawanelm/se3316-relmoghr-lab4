@@ -156,10 +156,15 @@ router.get("/reviews/find/:subject/:code", (req,res)=>{
     const code = req.params.code;
     const sub = req.params.subject;
     let revs = [], s =[];
+    let m = new Object;
+
     console.log(reviewReader.reviews.length);
     for(let i = 0; i<reviewReader.reviews.length; i++){
         s = reviewsDB.get('reviews').value();
-        if(s[i].subject == sub && s[i].courseCode == code && s[i].visibility!= "hidden"){  
+        if(s[i]["review"].subject == sub && s[i]["review"].courseCode == code && s[i]["review"].visibility!= "hidden"){
+            m.user = s[i]["review"].userName;
+            m.review = s[i]["review"].review;
+            m.date =s[i]["review"].date;
             revs.push(s[i]);
         }
     }

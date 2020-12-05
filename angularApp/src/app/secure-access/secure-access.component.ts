@@ -70,7 +70,8 @@ export class SecureAccessComponent implements OnInit {
     let newSchd = {
       name: "",
       num: 0,
-      user: (this.name),
+      description: this.schdDescr,
+      user: this.app.loggedInEmail,
       visibility: "",
       dateModified: Date.now()
     }
@@ -100,7 +101,7 @@ export class SecureAccessComponent implements OnInit {
 
   //gets all user schedules 
   viewUser(){
-    this.coursesService.viewUserSchedules().subscribe(schds => {
+    this.coursesService.viewUserSchedules(this.app.loggedInEmail).subscribe(schds => {
       this.schedules = schds});
     
     for(let i = 0; i <this.schedules.length; i++){

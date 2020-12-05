@@ -1,14 +1,6 @@
 {
   "reviews": [
     {
-      "subject": "WRITING",
-      "courseCode": "1020F",
-      "date": "today",
-      "user": "rawan",
-      "review": "The professor was amazing. The lectures were really engaing.",
-      "visibility": "not hidden"
-    },
-    {
       "review": {
         "subject": "WRITING",
         "courseCode": "1020F",

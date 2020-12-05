@@ -33,8 +33,8 @@ export class CoursesService {
   }
 
   //gets the schedules for a specific user
-  viewUserSchedules(){
-    return this.http.get('/api/secure/schd/RAWAN');
+  viewUserSchedules(email){
+    return this.http.get('/api/secure/schd/' + `${email}`);
   }
 
   //saves a schedule to the database
