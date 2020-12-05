@@ -34,8 +34,29 @@ const reviewsFile = read.readFileSync('./reviews.json', 'utf-8');
 const scheduleReader = JSON.parse(ScheduleFile);
 const reviewReader = JSON.parse(reviewsFile);
 
-//enable us to read and parse JSON file
+//policies database
+const secPoliciesAdapter = new FileSync('secPolicies.json');
+const secPoliciesDB = low(secPoliciesAdapter);
+const dmcaPoliciesAdapter = new FileSync('dmcaPolicies.json');
+const dmcaPoliciesDB = low(dmcaPoliciesAdapter);
+const aupPoliciesAdapter = new FileSync('aupPolicies.json');
+const aucPoliciesDB = low(aupPoliciesAdapter);
+ 
+
+//read provided JSON file
 const fs = require('fs');
+const e = require('express');
+const accFileContent = fs.readFileSync('./accounts.json', 'utf8');
+//read from files
+const secPoliciesContent = fs.readFileSync('./secPolicies.json', 'utf8');
+const dmcaPoliciesContent = fs.readFileSync('./dmcaPolicies.json', 'utf8');
+const audPoliciesContent = fs.readFileSync('./aupPolicies.json', 'utf8');
+ 
+//database for email accs
+const accountsAdapter = new FileSync('accounts.json');
+const accountsDB = low(accountsAdapter);
+
+//enable us to read and parse JSON file
 const { stringify } = require('querystring');
 const file = fs.readFileSync('./Lab3-timetable-data.json', 'utf8', function(err, data) {
 });
@@ -210,6 +231,156 @@ secure.post('/schedule', (req,res) => {
     res.send(foundSchedule);
 });
 
+//writes new acc info to database
+admin.post('/accounts', (req,res)=>{
+    const newAccount = req.body;
+    accountsDB.push(newAccount).write();
+    res.send(newAccount);
+});
+ 
+//gets status of currently logged in email to see if they are an admin
+admin.get('/status/:email', (req, res) => {
+    const email = req.params.email;
+    let adminExists = false;
+ 
+    const allAccs = JSON.parse(accFileContent);
+    for(var j = 0; j < allAccs.length; j++){
+        if(allAccs[j]["account"]["email"] == email){
+            if(allAccs[j]["account"]["access"] == "admin"){
+                adminExists = true;
+            }
+        }
+    }
+    if(adminExists == true){
+        res.send({status: 1});
+    }
+    else{
+        res.send({status: 0});
+    }
+});
+ 
+//takes an existing user and makes them an admin
+admin.post('/new', (req,res)=>{
+    const newAccount = req.body.email;
+    const allAccs = JSON.parse(accFileContent);
+    let dict = new Object();
+    let accountObj = new Object();
+    let counter = 0;
+ 
+    for(var i = 0; i < allAccs.length; i++){
+        if(allAccs[i]["account"]["email"] == newAccount){
+            dict["name"] = allAccs[i]["account"]["name"];
+            dict["email"] = allAccs[i]["account"]["email"];
+            dict["status"] = allAccs[i]["account"]["status"];
+            dict["access"] = "admin";
+            counter++;
+        }
+    }
+    accountObj = {account: dict};
+            
+    if(counter > 0){
+        accountsDB.remove({account:{email:newAccount}}).write();  
+        accountsDB.push(accountObj).write();
+    }
+    else{
+        res.send({status: 0});
+    }
+});
+ 
+//takes an existing user and deactivates/reactivates acc
+admin.post('/activation', (req,res)=>{
+    const emailAcc = req.body.email;
+    const allAccs = JSON.parse(accFileContent);
+    let dict = new Object();
+    let counter = 0;
+    
+    for(var i = 0; i < allAccs.length; i++){
+        if(allAccs[i]["account"]["email"] == emailAcc && allAccs[i]["account"]["status"] == "active"){
+            dict["name"] = allAccs[i]["account"]["name"];
+            dict["email"] = allAccs[i]["account"]["email"];
+            dict["access"] = allAccs[i]["account"]["access"];
+            dict["status"] = "deactive";
+            counter++; counter++;
+        }
+        else if(allAccs[i]["account"]["email"] == emailAcc && allAccs[i]["account"]["status"] == "deactive"){
+            dict["name"] = allAccs[i]["account"]["name"];
+            dict["email"] = allAccs[i]["account"]["email"];
+            dict["access"] = allAccs[i]["account"]["access"];
+            dict["status"] = "active";
+            counter++;
+        }
+    }
+    accountObj = {account: dict};
+ 
+    if(counter > 0){
+        accountsDB.remove({account:{email:emailAcc}}).write();  
+        accountsDB.push(accountObj).write();
+        res.send({status: counter})
+    }
+    else{
+        res.send({status: 0});
+    }
+});
+ 
+//function to check if user is active before logging in 
+admin.get('/activation/:email', (req,res)=>{
+    const emailToLogin = req.params.email;
+    const allAccs = JSON.parse(accFileContent);
+    var login = false;
+    for(var i = 0; i < allAccs.length; i++){
+        if(allAccs[i]["account"]["email"] == emailToLogin && allAccs[i]["account"]["status"] == "active"){
+            login = true;
+            break;
+        }
+    }
+    if(login == true){
+        res.send({status: 1});
+    }
+    else{
+        res.send({status: 0});
+    }
+}); 
+
+//update security and privacy policy
+admin.post('/security', (req,res)=>{
+    const newSecPolicy = req.body;
+    secPoliciesDB.push(newSecPolicy).write();
+    res.send(newSecPolicy);
+});
+ 
+//update DMCA notice and takedown policy
+admin.post('/DMCA', (req,res)=>{
+    const newDMCAPolicy = req.body;
+    dmcaPoliciesDB.push(newDMCAPolicy).write();
+    res.send(newDMCAPolicy);
+});
+ 
+//update AUP 
+admin.post('/AUP', (req,res)=>{
+    const newAUPPolicy = req.body;
+    aucPoliciesDB.push(newAUPPolicy).write();
+    res.send(newAUPPolicy);
+});
+ 
+//read the policies from the db
+admin.get('/update/:policy', (req,res)=>{
+    const pol = req.params.policy;
+ 
+    if(pol == "security"){
+        const policies = JSON.parse(secPoliciesContent);
+        res.send(policies);
+        console.log(policies)
+    }
+    if(pol == "DMCA"){
+        const policies = JSON.parse(dmcaPoliciesContent);
+        res.send(policies);
+    }
+    if(pol == "AUP"){
+        const policies = JSON.parse(audPoliciesContent);
+        res.send(policies);
+    }
+});
+ 
 //minimizes repitition
 app.use('/api/open', router);
 app.use('/api/admin', admin);
