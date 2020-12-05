@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {CoursesService} from '../courses.service';
 //import { DatePipe } from '@angular/common';
 import {AngularFireAuth} from '@angular/fire/auth';
+import { AppComponent } from '../app.component';
+import firebase from 'firebase/app';
+
 
 @Component({
   selector: 'app-secure-access',
@@ -25,7 +28,7 @@ export class SecureAccessComponent implements OnInit {
   savedCourses: any = [];
   objects: any = [];
   others: any = [];
-  constructor(private coursesService: CoursesService,public auth:AngularFireAuth) { }
+  constructor(private coursesService: CoursesService,private app: AppComponent,public auth:AngularFireAuth) { }
 
   ngOnInit(): void {
   }
@@ -174,7 +177,5 @@ inputValidation(name){
   else
       return true;
 }
-
-
 }
 

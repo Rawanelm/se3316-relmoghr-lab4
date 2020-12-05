@@ -1,0 +1,21 @@
+
+<h2>Security and Privacy Policy</h2>
+<button (click) = "privacyPolicy()">View Policy</button>
+ 
+<div id="results" *ngFor = 'let priv of priv'>
+    <ol>{{ priv.security }}</ol>
+</div>
+ 
+<h2>DMCA Notice and Takedown Policy</h2>
+<button (click) = "dmca()">View Policy</button>
+ 
+<div id="results" *ngFor = 'let dmcas of dmcas'>
+    <ol>{{ dmcas.DMCA }}</ol>
+</div>
+ 
+<h2>Acceptable Use Policy</h2>
+<button (click) = "aup()">View Policy</button>
+ 
+<div id="results" *ngFor = 'let aups of aups'>
+    <ol>{{ aups.AUP }}</ol>
+</div>

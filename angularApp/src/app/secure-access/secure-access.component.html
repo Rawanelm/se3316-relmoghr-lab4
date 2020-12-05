@@ -37,6 +37,15 @@
     <h3>Edit Schedule</h3>
 </div>
 
+<form name = "myForm">
+    <h2>Update Password</h2>
+    <div class="form-group">
+        <label>New Password: </label>
+        <input type="password" #newpswd name="password" ng-model="user.password" placeholder="Type new password here..." required>
+    </div>
+    <button (click) = "saniEmailPass(newpswd.value)" >Update Password</button>
+</form>
+
 <div>
     <h3>View My Schedules:</h3>
     <button (click)= "viewUser()" >View Schedules</button>
