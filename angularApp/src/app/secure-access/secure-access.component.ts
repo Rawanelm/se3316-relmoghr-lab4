@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CoursesService} from '../courses.service';
 //import { DatePipe } from '@angular/common';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-secure-access',
@@ -24,7 +25,7 @@ export class SecureAccessComponent implements OnInit {
   savedCourses: any = [];
   objects: any = [];
   others: any = [];
-  constructor(private coursesService: CoursesService) { }
+  constructor(private coursesService: CoursesService,public auth:AngularFireAuth) { }
 
   ngOnInit(): void {
   }
@@ -108,7 +109,7 @@ export class SecureAccessComponent implements OnInit {
   }
 
   //returns search results to Summary view
-  collaps(){
+  collapse(){
 
   }
 
@@ -139,8 +140,27 @@ export class SecureAccessComponent implements OnInit {
     }
   }
 
+   
+  saniEmailPass(name){
+    if(this.app.emailPassInputSani(name)==false){
+      alert("Please input a valid email and password. Note: password special characters do not allow: '^(){}[]<>+=:;/,-");
+    }
+    else{
+      this.updatePassword(name);
+    }
+  }
+ 
+  updatePassword(pswd){
+    var user = firebase.auth().currentUser;
+    user.updatePassword(pswd).then(function() {
+      alert("Password update")
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }
+
   //input sanittization, ensures that input does not contain any html,css, javascript characters
- inputValidation(name){
+inputValidation(name){
   if(name.length > 20 || name.length < 0 || name.includes('#') || name.includes('/') || name.includes(':') || name.includes('.') 
   || name.includes(',') || name.includes('?') || name.includes('<') || name.includes('>') || name.includes('%') || 
   name.includes('-') || name.includes('[') || name.includes(']') || name.includes('(') || name.includes('!') || 
@@ -154,6 +174,7 @@ export class SecureAccessComponent implements OnInit {
   else
       return true;
 }
+
 
 }
 
