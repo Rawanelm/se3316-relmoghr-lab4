@@ -167,7 +167,6 @@ router.get("/reviews/find/:subject/:code", (req,res)=>{
     res.send(revs);
 });
 
-
 //delete a specific schedule from database
 secure.get('/schedules/delete/:schd', (req,res)=>{
     const schd = req.params.schd;
@@ -380,7 +379,27 @@ admin.get('/update/:policy', (req,res)=>{
         res.send(policies);
     }
 });
- 
+
+secure.get('/name/:email', (req,res)=>{
+    const email = req.params.email;
+    const allAccs = JSON.parse(accFileContent);
+    let name = "";
+    
+    for(var i = 0; i < allAccs.length; i++){
+        if(allAccs[i]["account"]["email"] == email){
+            name = allAccs[i]["account"]["name"];
+            break;
+        }
+    }
+
+    if(name == ""){
+        res.send({status: 0});
+    }
+    else{
+        res.send(name);
+    }
+});
+
 //minimizes repitition
 app.use('/api/open', router);
 app.use('/api/admin', admin);

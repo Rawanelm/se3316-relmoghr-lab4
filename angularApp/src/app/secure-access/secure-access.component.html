@@ -11,7 +11,7 @@
     <textarea placeholder = "Review" rows = "5" columns= "50" [(ngModel)]= "review">
         </textarea>
 
-    <button (click) = "postReview()">Submit Review</button>
+    <button (click) = "postReview()" type ="submit">Submit Review</button>
 </div>
 
 <div >
@@ -19,6 +19,7 @@
 
     <label>Add courses to a schedule:</label>
     <input type ="text" [(ngModel)]= "modSchdName" placeholder="Schedule to be filled">
+    <input type ="text" [(ngModel)]= "schdDescr" placeholder="Description(optional)">
     <br>
     <div id="userInput" *ngFor="let course of courses; let i = index"> 
         <label>Subject Code:</label>
@@ -26,15 +27,41 @@
         <label>Course Code:</label>
         <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="course.courseCode" #name="ngModel" name="course{{i}}" placeholder ="Course Code">
     </div>
+
+    <input type="radio" id="private" value="private">
+    <label for="private">Private</label><br>
+    <input type="radio" id="public" value="public">
+    <label for="public">Public</label><br>
     
-    <button (click)= "add()">Add more courses</button>
+    <button (click)= "add()" type ="submit">Add more courses</button>
     <br>
-    <button (click) = "checkScheduleName()">Save Courses to Schedule</button>
+    <button (click) = "checkScheduleName()" type ="submit">Save Courses to Schedule</button>
     <br> 
 </div>
 
 <div>
     <h3>Edit Schedule</h3>
+    <label>Schedule Name:</label>
+    <input type ="text" [(ngModel)]= "modSchdName" placeholder="Schedule to be filled">
+    <input type ="text" [(ngModel)]= "schdDescr" placeholder="Description(optional)">
+    <br>
+    <div id="userInput" *ngFor="let course of courses; let i = index"> 
+        <label>Subject Code:</label>
+        <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="course.subject" #name="ngModel" name="course{{i}}" placeholder ="Subject Code">
+        <label>Course Code:</label>
+        <input type="text" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="course.courseCode" #name="ngModel" name="course{{i}}" placeholder ="Course Code">
+    </div>
+
+    <input type="radio" id="private" value="private">
+    <label for="private">Private</label><br>
+    <input type="radio" id="public" value="public">
+    <label for="public">Public</label><br>
+    
+    <button (click)= "add()" type ="submit">Add more courses</button>
+    <br>
+    <button (click) = "checkScheduleName()" type ="submit">Save Courses to Schedule</button>
+    <br> 
+
 </div>
 
 <form name = "myForm">
@@ -43,12 +70,12 @@
         <label>New Password: </label>
         <input type="password" #newpswd name="password" ng-model="user.password" placeholder="Type new password here..." required>
     </div>
-    <button (click) = "saniEmailPass(newpswd.value)" >Update Password</button>
+    <button (click) = "saniEmailPass(newpswd.value)" type ="submit">Update Password</button>
 </form>
 
 <div>
     <h3>View My Schedules:</h3>
-    <button (click)= "viewUser()" >View Schedules</button>
+    <button (click)= "viewUser()" type ="submit">View Schedules</button>
 
     <!--<div id="results" *ngFor =  'let schd of schedules'>
         

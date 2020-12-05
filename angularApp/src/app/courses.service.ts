@@ -23,6 +23,10 @@ export class CoursesService {
     return(this.http.get('/api/open/search/' + `/${keyword}`));
   }
 
+  getName(email){
+    return this.http.get('/api/secure/name'+ `/${email}`);
+  }
+
   //gets the public schedules
   viewAllSchds(){
     return this.http.get('/api/open/all');

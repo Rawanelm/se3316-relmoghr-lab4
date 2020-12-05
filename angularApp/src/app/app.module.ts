@@ -6,7 +6,7 @@ import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
-
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +27,12 @@ const Routes =[
 
   {path: 'openAccess', component: OpenAccessComponent},
   
-  {path: 'homePage', component: HomePageComponent}
+  {path: 'homePage', component: HomePageComponent},
+
+  {path: 'policies', component: PoliciesComponent},
+
+  { path: 'signup', component: SignUpComponent}
+
 ]
 @NgModule({
   declarations: [
@@ -50,7 +55,7 @@ const Routes =[
     AngularFireModule.initializeApp(environment.firebaseConfig),
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

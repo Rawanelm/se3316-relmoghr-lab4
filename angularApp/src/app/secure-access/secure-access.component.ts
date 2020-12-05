@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CoursesService} from '../courses.service';
-//import { DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {AngularFireAuth} from '@angular/fire/auth';
 import { AppComponent } from '../app.component';
 import firebase from 'firebase/app';
@@ -19,6 +19,10 @@ export class SecureAccessComponent implements OnInit {
   result: any;
   date: any;
 
+  schdDescr: string = '';
+
+  name:string = '';
+  
   schedules: any = [];
   deleteSchd: string = '';
   viewSchd: string = '';
@@ -33,6 +37,11 @@ export class SecureAccessComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getName(){
+    this.coursesService.getName(this.app.loggedInEmail).subscribe(name =>{ this.result = name
+    name = this.result.name});
+  }
+
   //adds more input fields for the suer to add courses 
   add(){
     this.courses.push({subject: "", courseCode : ""});
@@ -41,6 +50,7 @@ export class SecureAccessComponent implements OnInit {
 
   //ensures that schedule exists
   checkScheduleName(){
+    if(this.modSchdName != ''){
     this.coursesService.checkScheduleName(this.modSchdName).subscribe(schds => {this.schedules = schds;
       
       if(this.schedules.status == 4){
@@ -50,17 +60,19 @@ export class SecureAccessComponent implements OnInit {
         this.saveNewCourses();        
       }
     });
+  } else{alert("Schedule Name is required!");}
   }
 
   //saves schedule with subject and course code pairs
   saveNewCourses(){
+    this.getName();
     let number = 0;
     let newSchd = {
       name: "",
       num: 0,
-      user: "",
+      user: (this.name),
       visibility: "",
-      dateModified: ""
+      dateModified: Date.now()
     }
 
     for(let k =0; k< this.courses.length; k++){
@@ -117,10 +129,10 @@ export class SecureAccessComponent implements OnInit {
   }
 
   postReview(){
-
+    this.getName();
     //ensures that all required fields are entered 
     if(this.subject ==''|| this.courseCode ==''||this.review ==''){
-       alert("To add a review, subject, course code, and review fields must nor be empty.")
+       alert("To add a review, subject, course code, and review fields must not be empty.")
     } else{
         //this.date=new Date();
         //let latest_date =this.datepipe.transform(this.date, 'yyyy-MM-dd');
@@ -128,16 +140,16 @@ export class SecureAccessComponent implements OnInit {
           "subject":this.subject, 
           "courseCode":this.courseCode, 
           "review" : this.review,
-          "date":"",
+          "date": Date.now(),
           "visibility":"not hidden",
-          "userName": ""}
+          "userName": name}
 
           this.coursesService.addReview(userReview).subscribe(status =>{ this.result = status;
             if(this.result.status == 4){
               alert("Course does not exist");
             }
             else if(this.result.status == 1){
-              alert("Review Saved ")        
+              alert("Review Saved")     
             }
           });
     }
