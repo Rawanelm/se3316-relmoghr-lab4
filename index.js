@@ -42,19 +42,19 @@ const dmcaPoliciesDB = low(dmcaPoliciesAdapter);
 const aupPoliciesAdapter = new FileSync('aupPolicies.json');
 const aucPoliciesDB = low(aupPoliciesAdapter);
  
+//database for email accs
+const accountsAdapter = new FileSync('accounts.json');
+const accountsDB = low(accountsAdapter);
 
 //read provided JSON file
 const fs = require('fs');
 const e = require('express');
 const accFileContent = fs.readFileSync('./accounts.json', 'utf8');
+
 //read from files
 const secPoliciesContent = fs.readFileSync('./secPolicies.json', 'utf8');
 const dmcaPoliciesContent = fs.readFileSync('./dmcaPolicies.json', 'utf8');
 const audPoliciesContent = fs.readFileSync('./aupPolicies.json', 'utf8');
- 
-//database for email accs
-const accountsAdapter = new FileSync('accounts.json');
-const accountsDB = low(accountsAdapter);
 
 //enable us to read and parse JSON file
 const { stringify } = require('querystring');
