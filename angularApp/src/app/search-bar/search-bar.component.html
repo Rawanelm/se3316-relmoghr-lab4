@@ -8,7 +8,7 @@
     <button (click)= "search()">Search</button>
 
     <label>Keyword Search:</label>
-    <input placeholder = "Keyword" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="keyword">
+    <input placeholder = "Keyword" [(ngModel)]="keyword">
     <button (click) = "keywordSearch()">Search</button>
 </div>
 

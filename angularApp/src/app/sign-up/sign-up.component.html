@@ -1,0 +1,16 @@
+<form name = "myForm2" required>
+    <h2>Sign Up for Account</h2>
+    <div class="form-group">
+        <label>Name: </label>
+        <input type="name" #nameSignUp name="name" [(ngModel)]= "name" ng-model="user.name" class="form-control" placeholder="Type name here..." required>
+    </div>
+    <div class="form-group">
+        <label>Email Address: </label>
+        <input type="email" #emailSignUp name="email" [(ngModel)]= "email" ng-model="user.email" class="form-control" placeholder="Type email here..." required>
+    </div>
+    <div class="form-group">
+        <label>Password: </label>
+        <input type="password" #passwordSignUp name="password" [(ngModel)]= "password" ng-model="user.password" class="form-control" placeholder="Type password here..." required>
+    </div>
+    <button (click) = "checkContent()" (click)="signUp(emailSignUp.value, passwordSignUp.value, nameSignUp.value)">Submit</button>
+</form>

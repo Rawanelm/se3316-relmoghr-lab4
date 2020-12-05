@@ -1,28 +1,23 @@
 <h1>{{title}}</h1>
-
-<nav>
-    <a routerLink = "/homePage">Home Page</a>
-    <a routerLink = "/openAccess">Browse As Guest</a>
-    <a routerLink = "/secureAccess">My Dashboard</a>
-    <a routerLink = "/adminComponent">Administrators</a>
-</nav>
-
+<h2>{{type}}</h2>
+ 
+<ul>
+  <li><a routerLink = '/login'>Home Page</a></li>
+  <li><a routerLink = '/openAccess'>Search Courses</a></li>
+  <li><a routerLink = '/secureAccess'>Create a Schedule</a></li>
+  <li><a routerLink = '/adminAccess'>Administrators</a></li>
+  <li><a routerLink = '/policies'>Policy</a></li>
+</ul>
+ 
 <router-outlet></router-outlet>
-
-<footer>
-    <span (click)= "privacyPolicy()" ><h5>Privacy Policy</h5></span>
-
-    <span (click)= "acceptableUse()" ><h5>Acceptable Use Policy</h5></span>
-
-    <span (click)= "takedown()" ><h5>DMCA Notice & Takedown Policy</h5></span>
+ 
+<div></div>
+<button (click) = "logout()">Logout</button>
+ 
+<footer class = "footer">  
+  <span class = "footer-btn"><a routerLink = '/policies'>Privacy Policy</a></span>
+  <span class = "footer-btn"><a routerLink = '/policies'>DMCA Notice & Takedown Policy</a></span>
+  <span class = "footer-btn"><a routerLink = '/policies'>Acceptable Use Policy</a></span>
 </footer>
 
-
-
-<!--
-<div>
-    <app-search-bar></app-search-bar>
-     <app-schd-menu></app-schd-menu>
- </div> 
--->
 

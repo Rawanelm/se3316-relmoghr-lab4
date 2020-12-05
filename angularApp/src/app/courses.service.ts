@@ -55,4 +55,42 @@ export class CoursesService {
   deleteSchd(schdName){
     return this.http.get('/api/secure/schedules/delete/'+ `${schdName}`);
   }
+
+  checkAccStatus(email){
+    return this.http.get('/api/admin/status'+ `/${email}`);
+  }
+ 
+  addAdmin(email){
+    return this.http.post('/api/admin/new', {email});
+  }
+ 
+  changeActivation(email){
+    return this.http.post('/api/admin/activation', {email});
+  }
+ 
+  checkActivation(email){
+    return this.http.get('/api/admin/activation'+ `/${email}`);
+  }
+
+  updateSecPrivPolicy(security){
+    return this.http.post('/api/admin/security', {security});
+  }
+ 
+  updateDMCA(DMCA){
+    return this.http.post('/api/admin/DMCA', {DMCA});
+  }
+ 
+  updateAUP(AUP){
+    return this.http.post('/api/admin/AUP', {AUP});
+  }
+ 
+  readPolicies(policy){
+    return this.http.get('/api/admin/update'+ `/${policy}`);
+  }
+
+    //save account info to db
+    saveAccount(account){
+      return this.http.post('/api/admin/accounts', {account});
+    }
+  
 }

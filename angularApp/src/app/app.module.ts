@@ -15,6 +15,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { SecureAccessComponent } from './secure-access/secure-access.component';
 import { OpenAccessComponent } from './open-access/open-access.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 const Routes =[
   {path: 'adminComponent', component: AdminPanelComponent },
@@ -35,6 +36,7 @@ const Routes =[
     SecureAccessComponent,
     OpenAccessComponent,
     HomePageComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

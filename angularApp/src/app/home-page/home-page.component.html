@@ -6,26 +6,21 @@
         Register now!     
     </p>
 </div>
-
-<form id = "logIn">
-    <label>Email:</label>
-    <input placeholder = "Username">
-    <br>
-    <label>Password:</label>
-    <input placeholder = "Password">
-    <br>
-    <button (click) = "signIn()" >Log in</button>
+<h2>Log in with Google Account</h2>
+<button (click)="loginWithGoogle()">Google Login</button>
+ 
+<form name = "myForm" required>
+    <h2>Please Sign In</h2>
+    <div class="form-group">
+        <label>Email Address: </label>
+        <input type="email" #emailSignIn name="email" ng-model="user.email" placeholder="Type email here..." required>
+    </div>
+    <div class="form-group">
+        <label>Password: </label>
+        <input type="password" #passwordSignIn name="password" ng-model="user.password" placeholder="Type password here..." required>
+    </div>
+    <button (click) = "checkContent()" (click) = "saniEmailPass(emailSignIn.value)" (click) = "saniEmailPass(passwordSignIn.value)" (click)="login(emailSignIn.value, passwordSignIn.value)">Submit</button>
 </form>
-
-<form id = "signUp">
-    <label>Email:</label>
-    <input placeholder = "Username">
-    <br>
-    <label>Name: </label>
-    <input placeholder = "name">
-    <br>
-    <label>Password:</label>
-    <input placeholder = "Password">
-    <br>
-    <button (click) = "register()" >Register</button>
-</form>
+ 
+<h2>Don't have an account?</h2>
+<button (click) = "loadSignUp()">Sign Up Now</button>

@@ -57,9 +57,9 @@ router.get('/search/:keyword', (req,res) => {
 
         var str = catalogue[i]["catalog_nbr"];
         var str2 = catalogue[i]["className"];
+        console.log(str+str2);
 
-        var match2 = str2.toUpperCase();
-        if(str.includes(keyword)|| match2.includes(keyword)){
+        if(str.includes(keyword)|| str2.includes(keyword)){
             foundCourse["subject"] = catalogue[i]["subject"];
             foundCourse["class"] = catalogue[i]["catalog_nbr"];
             foundCourse["name"] = catalogue[i]["className"];
