@@ -1,39 +1,39 @@
 <p>admin-panel works!</p>
-<!-- I need a navigation bar here-->
-
-<div>
-    <label>Search for a user:</label>
-    <input placeholder = "User email">
-    
-    <!--<div id="results">
-        <tr *ngFor =  'let user of users'>
-            <ol>{{user.email}}</ol>
-            <ol>{{user.name}}</ol>
-            <ol>{{user.status}}</ol>
-            <ol>{{user.privilege}}</ol>
-
-            on click, the status/privilege will be switched and the paged refreshed to reflect the change
-            <button>Change Privileges</button>
-            <button>Change Status</button>
-        </tr>
-        <br>
-    </div> -->
-</div>
-
-<div>
-    <label>Search for course reviews</label>
-    <input placeholder = "Subject Code">
-    <input placeholder = "Course Code">
-
-    <!--
-    <div id="results">
-        <tr *ngFor =  'let review of reviews'>
-            <ol>{{review.email}}</ol>
-            <ol>{{review.visibility}}</ol>
-
-            on click, the visibility will be switched and the paged refreshed to reflect the change
-            <button>Change visibility</button>
-        </tr>
-        <br>
-    </div>-->
-</div> 
+ 
+<button (click) = "getTokenOfCurrentUser()">Email Currently Logged In</button>
+ 
+<form name = "myForm">
+    <h2>Add An Admin</h2>
+    <div class="form-group">
+        <label>Email: </label>
+        <input type="email" #newAdmin name="email" ng-model="user.email" placeholder="Type email here..." required>
+    </div>
+    <button (click) = "saniEmailPassA(newAdmin.value)">Add</button>
+</form>
+ 
+<form name = "myForm2">
+    <h2>Change Activation of User</h2>
+    <div class="form-group">
+        <label>Email: </label>
+        <input type="email" #emailAcc name="email" ng-model="user.email" placeholder="Type email here..." required>
+    </div>
+    <button (click) = "saniEmailPassC(emailAcc.value)">Deactivate or Reactivate</button>
+</form>
+ 
+    <h2>Security and Privacy Policy</h2>
+    <div class="form-group">
+        <textarea type="text" name="text" #securityPolicy placeholder="Type new Security and Privacy Policy here..."></textarea>
+    </div>
+    <button (click) = "updateSecurity(securityPolicy.value)">Update Policy</button>
+ 
+    <h2>DMCA Notice and Takedown Policy</h2>
+    <div class="form-group">
+        <textarea type="text" name="text" #DMCAPolicy placeholder="Type new DMCA Notica and Takedown Policy here..."></textarea>
+    </div>
+    <button (click) = "updateDMCA(DMCAPolicy.value)">Update Policy</button>
+ 
+    <h2>Acceptable User Policy</h2>
+    <div class="form-group">
+        <textarea type="text" name="text" #AUPPolicy placeholder="Type new Acceptable Use Policy here..."></textarea>
+    </div>
+    <button (click) = "noEmptyFields()" (click) = "updateAUP(AUPPolicy.value)">Update Policy</button>
