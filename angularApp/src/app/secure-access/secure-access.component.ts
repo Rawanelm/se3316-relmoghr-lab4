@@ -50,18 +50,28 @@ export class SecureAccessComponent implements OnInit {
 
   //ensures that schedule exists
   checkScheduleName(){
-    if(this.modSchdName != ''){
+
+    
+    this.auth.currentUser
+    .then((user) => {
+      if(user){
     this.coursesService.checkScheduleName(this.modSchdName).subscribe(schds => {this.schedules = schds;
       
-      if(this.schedules.status == 4){
+      if(this.modSchdName != ""){
+      if(this.schedules.status == 400){
         alert("Schedule name already exists")
       }
-      else if(this.schedules.status == 1){
+      else if(this.schedules.status == 100){
         this.saveNewCourses();        
-      }
+      }} else {alert("Schedule name must be specified!");}
     });
-  } else{alert("Schedule Name is required!");}
   }
+  else{
+    alert("Must be logged in to perform this functionality.");
+  } 
+});
+  }
+
 
   //saves schedule with subject and course code pairs
   saveNewCourses(){
@@ -71,7 +81,7 @@ export class SecureAccessComponent implements OnInit {
       name: "",
       num: 0,
       description: this.schdDescr,
-      user: this.app.loggedInEmail,
+      user: (this.name),
       visibility: "",
       dateModified: Date.now()
     }
@@ -101,7 +111,7 @@ export class SecureAccessComponent implements OnInit {
 
   //gets all user schedules 
   viewUser(){
-    this.coursesService.viewUserSchedules(this.app.loggedInEmail).subscribe(schds => {
+    this.coursesService.viewUserSchedules().subscribe(schds => {
       this.schedules = schds});
     
     for(let i = 0; i <this.schedules.length; i++){

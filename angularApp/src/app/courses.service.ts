@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class CoursesService {
 
   constructor(private http: HttpClient) { }
-  searchUrl = "/api/open"; //used for search fo functionality
+  searchUrl = "/api/open"; //used for search functionality
 
   list: any = [];
 
@@ -33,8 +33,8 @@ export class CoursesService {
   }
 
   //gets the schedules for a specific user
-  viewUserSchedules(email){
-    return this.http.get('/api/secure/schd/' + `${email}`);
+  viewUserSchedules(){
+    return this.http.get('/api/secure/schd/Hadi');
   }
 
   //saves a schedule to the database

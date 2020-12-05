@@ -6,5 +6,24 @@
         "status": "active",
         "access": "admin"
       }
+    },
+
+    {
+        "account": {
+          "name": "Rawan",
+          "email": "rawan@gmail.com",
+          "status": "active",
+          "access": "user"
+        }
+    },
+
+    {
+        "account": {
+          "name": "Maria",
+          "email": "maria@gmail.com",
+          "status": "inactive",
+          "access": "user"
+        }
     }
+
 ]  

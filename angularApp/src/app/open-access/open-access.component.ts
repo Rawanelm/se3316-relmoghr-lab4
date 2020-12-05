@@ -27,10 +27,12 @@ export class OpenAccessComponent implements OnInit {
 
   expand(schedule){
     //add all the courses in the schedule to the array
+    this.detailedSchd = this.publicSchd;
   }
 
   collapse(){
     this.courses = "";
+    this.detailedSchd = "";
   }
 
   //input sanittization, ensures that input does not contain any html,css, javascript characters

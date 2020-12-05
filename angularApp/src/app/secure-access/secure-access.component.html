@@ -79,7 +79,8 @@
 
     <div id="results" *ngFor =  'let schd of schedules'>
         
-            <ol>{{schd.Schd.name}}</ol>
+            <ol>{{schd.name}}</ol>
+            <ol>{{schd.num}}</ol>
             <button (click) = "expand()">Expand</button>
             <button (click) = "collapse">Collapse</button>
             <button (click) = "delete(schd.name)">Delete</button>

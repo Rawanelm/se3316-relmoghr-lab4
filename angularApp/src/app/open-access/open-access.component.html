@@ -5,12 +5,13 @@
 <button (click)= "pubSchd()">View public Shcedules</button>
 
 <div id="results" *ngFor =  'let schd of publicSchd'>
-        <ol>{{schd.SCHD.name}}</ol>
-        <ol>{{schd.SCHD.num}}</ol>
+        <ol>{{schd.name}}</ol>
+        <ol>{{schd.num}}</ol>
         <button (click) = "expand(schd)">Expand</button>
         <button (click) = "collapse()">Collapse</button>
         
         <div *ngFor = 'let detail of detailedShcd'>
-                <ol></ol>
+                <ol>{{detail.date}}</ol>
+                <ol>{{details.descr}}</ol>
         </div>
 </div>

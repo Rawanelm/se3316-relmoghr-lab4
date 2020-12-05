@@ -86,6 +86,30 @@
         "subject": "WRITING",
         "courseCode": "1020F"
       }
+    },
+    {
+      "name": "NEW",
+      "user": "Hadi",
+      "descr": "This is a public schedule",
+      "num": 1,
+      "dateModified": "2020-12-11",
+      "visibility": "private",
+      "course_1": {
+        "subject": "SE",
+        "courseCode": "2022A"
+      }
+    },
+    {
+      "name": "NEW",
+      "user": "Rawan",
+      "descr": "This is a public schedule",
+      "num": 1,
+      "dateModified": "2020-12-11",
+      "visibility": "private",
+      "course_1": {
+        "subject": "SE",
+        "courseCode": "2022A"
+      }
     }
   ]
 }

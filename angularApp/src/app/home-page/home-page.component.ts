@@ -39,7 +39,7 @@ export class HomePageComponent {
         this.app.loggedInEmail = email;
       }
       else{
-        alert("Account is deactivated. Please email administrator at sanah@gmail.com to resolve.")
+        alert("Account is deactivated. Please email administrator at rawan@gmail.com to resolve.")
       }
     })
     .catch((error) => {
