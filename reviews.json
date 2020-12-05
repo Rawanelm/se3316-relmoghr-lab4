@@ -1,24 +1,36 @@
 {
   "reviews": [
     {
-      "review": {
-        "subject": "WRITING",
-        "courseCode": "1020F",
-        "review": "GREAT!",
-        "date": "",
-        "visibility": "not hidden",
-        "userName": ""
-      }
+      "subject": "SE",
+      "courseCode": "2202A",
+      "user": "hadi",
+      "review": "Great Class",
+      "visibility": "not hidden",
+      "date": "2020-12-4"
     },
     {
-      "review": {
-        "subject": "WRITING",
-        "courseCode": "1020F",
-        "review": "AWESOME!",
-        "date": "",
-        "visibility": "not hidden",
-        "userName": ""
-      }
+      "subject": "WRITING",
+      "courseCode": "1020F",
+      "user": "hadi",
+      "review": "Awesome Prof",
+      "visibility": "not hidden",
+      "date": "2020-12-4"
+    },
+    {
+      "subject": "SE",
+      "courseCode": "2202A",
+      "user": "Rawan",
+      "review": "Great Class",
+      "visibility": "not hidden",
+      "date": "2020-12-11"
+    },
+    {
+      "subject": "WRITING",
+      "courseCode": "1020F",
+      "user": "rawan",
+      "review": "Loved this class",
+      "visibility": "not hidden",
+      "date": "2020-12-4"
     }
   ]
 }

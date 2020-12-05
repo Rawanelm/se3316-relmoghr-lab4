@@ -1,12 +1,6 @@
 {
   "schedules": [
     {
-      "name": "hi",
-      "user": "RAWN",
-      "dateModified": "today",
-      "visibility": "private"
-    },
-    {
       "Schd": {
         "name": "HADI",
         "num": 1,
@@ -43,6 +37,54 @@
           "subject": "SE",
           "courseCode": "2202A"
         }
+      }
+    },
+    {
+      "name": "ONE ",
+      "user": "Rawan",
+      "num": 2,
+      "dateModified": "2020-12-3",
+      "visibility": "public",
+      "course_1": {
+        "subject": "WRITING",
+        "courseCode": "1020F"
+      },
+      "course_2": {
+        "subject": "SE",
+        "courseCode": "2202A"
+      }
+    },
+    {
+      "name": "MYSCHEDULE",
+      "user": "Hadi",
+      "num": 1,
+      "dateModified": "2020-12-4",
+      "visibility": "public",
+      "course_1": {
+        "subject": "WRITING",
+        "courseCode": "1020F"
+      }
+    },
+    {
+      "name": "PRIV",
+      "user": "Hadi",
+      "num": 1,
+      "dateModified": "2020-12-4",
+      "visibility": "private",
+      "course_1": {
+        "subject": "WRITING",
+        "courseCode": "1020F"
+      }
+    },
+    {
+      "name": "PUB",
+      "user": "Hadi",
+      "num": 1,
+      "dateModified": "2020-12-11",
+      "visibility": "public",
+      "course_1": {
+        "subject": "WRITING",
+        "courseCode": "1020F"
       }
     }
   ]
